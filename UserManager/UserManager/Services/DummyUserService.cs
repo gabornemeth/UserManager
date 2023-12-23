@@ -35,7 +35,7 @@ namespace UserManager.Services
             return Task.CompletedTask;
         }
 
-        public Task<IEnumerable<User>> GetAll()
+        public Task<IEnumerable<User>> GetAll(CancellationToken cancellation)
         {
             return Task.FromResult<IEnumerable<User>>(_users);
         }

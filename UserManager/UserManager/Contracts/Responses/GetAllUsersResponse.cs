@@ -2,8 +2,8 @@
 
 namespace UserManager.Contracts.Responses
 {
-    public class GetAllUsersResponse
+    public class GetAllUsersResponse : List<User>
     {
-        public IEnumerable<User> Users { get; set; } = Enumerable.Empty<User>();
+        public GetAllUsersResponse(IEnumerable<User> users) : base(users) { }
     }
 }

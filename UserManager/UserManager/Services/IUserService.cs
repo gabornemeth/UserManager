@@ -4,7 +4,7 @@ namespace UserManager.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetAll();
+        Task<IEnumerable<User>> GetAll(CancellationToken cancellation = default);
         
         Task<User?> GetById(int id);
         Task Add(User user);

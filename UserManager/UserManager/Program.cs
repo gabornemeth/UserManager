@@ -1,13 +1,17 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using UserManager.Mappings;
+using UserManager.Mongo;
 using UserManager.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddFastEndpoints().SwaggerDocument();
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile(new UserMapProfile()));
 
 // Register our own services
-builder.Services.AddSingleton<IUserService, DummyUserService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, MongoUserRepository>();
 
 var app = builder.Build();
 

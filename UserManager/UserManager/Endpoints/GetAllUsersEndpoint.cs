@@ -1,7 +1,6 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using UserManager.Contracts.Responses;
-using UserManager.Dtos;
 using UserManager.Services;
 
 namespace UserManager.Endpoints
@@ -19,9 +18,8 @@ namespace UserManager.Endpoints
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            var users = await _userService.GetAll();
-            var response = new GetAllUsersResponse { Users = users };
-            await SendOkAsync(response, cancellation: ct);
+            var users = await _userService.GetAll(ct);
+            await SendOkAsync(new GetAllUsersResponse(users), cancellation: ct);
         }
     }
 }
