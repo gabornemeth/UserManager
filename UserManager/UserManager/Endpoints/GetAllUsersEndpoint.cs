@@ -20,7 +20,8 @@ namespace UserManager.Endpoints
         public override async Task HandleAsync(CancellationToken ct)
         {
             var users = await _userService.GetAll();
-            await SendOkAsync(new GetAllUsersResponse { Users = users }, cancellation: ct);
+            var response = new GetAllUsersResponse { Users = users };
+            await SendOkAsync(response, cancellation: ct);
         }
     }
 }
