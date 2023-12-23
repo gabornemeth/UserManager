@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using UserManager.Dtos;
+using UserManager.Helpers;
 
 namespace UserManager.Services
 {
@@ -9,13 +10,7 @@ namespace UserManager.Services
 
         public DummyUserService()
         {
-            _users = LoadSample().ToList();
-        }
-
-        private User[] LoadSample()
-        {
-            var sampleData = File.ReadAllText("sample.json");
-            return JsonConvert.DeserializeObject<User[]>(sampleData) ?? [];
+            _users = SampleData.GetUsers().ToList();
         }
 
         public Task Add(User user)
@@ -40,7 +35,7 @@ namespace UserManager.Services
             return Task.FromResult<IEnumerable<User>>(_users);
         }
 
-        public Task<User?> GetById(int id)
+        public Task<User?> Get(int id)
         {
             return Task.FromResult(GetUserById(id));
         }

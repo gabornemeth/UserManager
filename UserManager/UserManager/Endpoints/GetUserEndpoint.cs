@@ -19,7 +19,7 @@ namespace UserManager.Endpoints
 
         public override async Task HandleAsync(GetUserRequest req, CancellationToken ct)
         {
-            var user = await _userService.GetById(req.Id);
+            var user = await _userService.Get(req.Id);
             if (user == null)
             {
                 await SendNotFoundAsync(cancellation: ct);

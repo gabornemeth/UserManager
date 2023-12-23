@@ -20,7 +20,7 @@ namespace UserManager.Test
 
             // assert
             endpoint.HttpContext.Response.StatusCode.Should().Be(200);
-            endpoint.Response.Users.Should().BeEmpty();
+            endpoint.Response.Should().BeEmpty();
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace UserManager.Test
 
             // assert
             endpoint.HttpContext.Response.StatusCode.Should().Be(200);
-            endpoint.Response.Users.Should().HaveCount(5);
+            endpoint.Response.Should().HaveCount(5);
         }
     }
 }

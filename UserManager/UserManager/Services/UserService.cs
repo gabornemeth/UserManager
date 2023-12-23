@@ -16,9 +16,14 @@ namespace UserManager.Services
             throw new NotImplementedException();
         }
 
-        public Task Delete(int userId)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            var user = await _repository.Get(id);
+            if (user == null)
+            {
+                throw new ArgumentException();
+            }
+            await _repository.Delete(user);
         }
 
         public Task<IEnumerable<User>> GetAll(CancellationToken cancellation)
@@ -26,9 +31,9 @@ namespace UserManager.Services
             return _repository.GetAll(cancellation);
         }
 
-        public Task<User?> GetById(int id)
+        public Task<User?> Get(int id)
         {
-            throw new NotImplementedException();
+            return _repository.Get(id);
         }
 
         public Task Update(User user)

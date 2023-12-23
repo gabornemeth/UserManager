@@ -1,10 +1,8 @@
-﻿using MongoDB.Bson;
-
-namespace UserManager.Mongo
+﻿namespace UserManager.Mongo
 {
     public class User
     {
-        public ObjectId Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -14,7 +12,7 @@ namespace UserManager.Mongo
 
         public Address Address { get; set; }
 
-        public string Phone {  get; set; }
+        public string Phone { get; set; }
 
         public string Website { get; set; }
 
