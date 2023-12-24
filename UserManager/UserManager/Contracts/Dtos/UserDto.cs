@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace UserManager.Dtos
+namespace UserManager.Contracts.Dtos
 {
     public class UserDto
     {
@@ -20,7 +20,7 @@ namespace UserManager.Dtos
         public AddressDto Address { get; set; }
 
         [JsonPropertyName("phone")]
-        public string Phone {  get; set; }
+        public string Phone { get; set; }
 
         [JsonPropertyName("website")]
         public string Website { get; set; }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using UserManager.Dtos;
+using UserManager.Contracts.Dtos;
 using UserManager.Models;
 
 namespace UserManager.Services

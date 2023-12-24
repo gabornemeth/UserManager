@@ -1,4 +1,4 @@
-﻿using UserManager.Dtos;
+﻿using UserManager.Contracts.Dtos;
 using UserManager.Endpoints;
 using UserManager.Services;
 

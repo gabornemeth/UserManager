@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace UserManager.Dtos
+namespace UserManager.Contracts.Dtos
 {
     public class AddressDto
     {

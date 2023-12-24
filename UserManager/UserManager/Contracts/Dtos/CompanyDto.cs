@@ -1,4 +1,4 @@
-﻿namespace UserManager.Dtos
+﻿namespace UserManager.Contracts.Dtos
 {
     public class CompanyDto
     {

@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using UserManager.Dtos;
+using UserManager.Contracts.Dtos;
 
 namespace UserManager.Test
 {
