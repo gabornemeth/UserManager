@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using UserManager.Contracts.Dtos;
 using UserManager.Contracts.Requests;
 using UserManager.Services;
-using IMapper = AutoMapper.IMapper;
 
 namespace UserManager.Endpoints
 {
@@ -11,24 +10,22 @@ namespace UserManager.Endpoints
     [AllowAnonymous]
     public class GetUserEndpoint : Endpoint<GetUserRequest, UserDto?>
     {
-        private readonly IUserService _userService;
-        private readonly IMapper _mapper;
+        private readonly UserEndpointServices _services;
 
         public GetUserEndpoint(IUserService userService, IMapper mapper)
         {
-            _userService = userService;
-            _mapper = mapper;
+            _services = new UserEndpointServices(userService, mapper);
         }
 
         public override async Task HandleAsync(GetUserRequest req, CancellationToken ct)
         {
-            var user = await _userService.Get(req.Id);
+            var user = await _services.UserService.Get(req.Id);
             if (user == null)
             {
                 await SendNotFoundAsync(cancellation: ct);
             }
          
-            await SendOkAsync(_mapper.Map<UserDto>(user), cancellation: ct);
+            await SendOkAsync(_services.Mapper.Map<UserDto>(user), cancellation: ct);
         }
     }
 }

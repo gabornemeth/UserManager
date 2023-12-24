@@ -1,4 +1,5 @@
-﻿using UserManager.Endpoints;
+﻿using Microsoft.AspNetCore.Http;
+using UserManager.Endpoints;
 using UserManager.Models;
 
 namespace UserManager.Test.Endpoints
@@ -16,7 +17,7 @@ namespace UserManager.Test.Endpoints
             await Endpoint.HandleAsync(CancellationToken.None);
 
             // assert
-            Endpoint.HttpContext.Response.StatusCode.Should().Be(200);
+            Endpoint.HttpContext.Response.StatusCode.Should().Be(StatusCodes.Status200OK);
             Endpoint.Response.Should().BeEmpty();
         }
 
@@ -31,7 +32,7 @@ namespace UserManager.Test.Endpoints
             await Endpoint.HandleAsync(CancellationToken.None);
 
             // assert
-            Endpoint.HttpContext.Response.StatusCode.Should().Be(200);
+            Endpoint.HttpContext.Response.StatusCode.Should().Be(StatusCodes.Status200OK);
             Endpoint.Response.Should().HaveCount(5);
         }
     }

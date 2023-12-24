@@ -10,7 +10,7 @@ namespace UserManager.Endpoints
     public class DeleteUserEndPoint : Endpoint<DeleteUserRequest>
     {
         private readonly IUserService _userService;
-
+        
         public DeleteUserEndPoint(IUserService userService)
         {
             _userService = userService;

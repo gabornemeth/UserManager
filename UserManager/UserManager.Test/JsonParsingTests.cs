@@ -11,5 +11,17 @@ namespace UserManager.Test
             var user = new UserDto { Id = 8, Name = "John Doe" };
             var json = JsonConvert.SerializeObject(user);
         }
+
+        [Fact]
+        public void ParseSampleData()
+        {
+            var users = SampleData.GetUsers();
+            
+            users.Should().HaveCount(10);
+            var firstUser = users.First();
+            firstUser.Name.Should().Be("Leanne Graham");
+            firstUser.Address.Should().NotBeNull();
+            firstUser.Address.Location.Should().NotBeNull();
+        }
     }
 }

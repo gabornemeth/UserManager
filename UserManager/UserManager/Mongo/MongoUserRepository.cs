@@ -81,7 +81,7 @@ namespace UserManager.Mongo
             await usersCollection.InsertOneAsync(user); // it should overwrite the existing one
         }
 
-        public async Task Add(User user, CancellationToken cancellation = default)
+        public async Task Create(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
             await usersCollection.InsertOneAsync(user);

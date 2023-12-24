@@ -10,19 +10,18 @@ namespace UserManager.Endpoints
     [AllowAnonymous]
     public class GetAllUsersEndpoint : EndpointWithoutRequest<GetAllUsersResponse>
     {
-        private readonly IUserService _userService;
-        private readonly AutoMapper.IMapper _mapper;
+        private readonly UserEndpointServices _services;
 
-        public GetAllUsersEndpoint(IUserService userService, AutoMapper.IMapper mapper)
+        public GetAllUsersEndpoint(IUserService userService, IMapper mapper)
         {
-            _userService = userService;
-            _mapper = mapper;
+            _services = new UserEndpointServices(userService, mapper);
         }
 
         public override async Task HandleAsync(CancellationToken ct)
         {
-            var users = await _userService.GetAll(ct);
-            await SendOkAsync(new GetAllUsersResponse(_mapper.Map<IEnumerable<UserDto>>(users)), cancellation: ct);
+            var users = await _services.UserService.GetAll(ct);
+            var mappedUsers = _services.Mapper.Map<IEnumerable<UserDto>>(users);
+            await SendOkAsync(new GetAllUsersResponse(mappedUsers), cancellation: ct);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace UserManager.Services
             _mapper = mapper;
         }
 
-        public async Task<bool> Add(User user)
+        public async Task<bool> Create(User user)
         {
             var existingUser = await _repository.Get(user.Id);
             if (existingUser != null)
@@ -25,7 +25,7 @@ namespace UserManager.Services
 
             // TODO: validate some fields
 
-            await _repository.Add(user);
+            await _repository.Create(user);
             return true;
         }
 

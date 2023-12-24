@@ -18,6 +18,9 @@ namespace UserManager.Mappings
             CreateMap<AddressDto, Address>();
             CreateMap<Address, AddressDto>();
 
+            CreateMap<LocationDto, Location>();
+            CreateMap<Location, LocationDto>();
+
             CreateMap<CompanyDto, Company>();
             CreateMap<Company, CompanyDto>();
         }

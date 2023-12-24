@@ -7,7 +7,7 @@ namespace UserManager.Services
         Task<IEnumerable<User>> GetAll(CancellationToken cancellation = default);
         
         Task<User?> Get(int id);
-        Task<bool> Add(User user);
+        Task<bool> Create(User user);
         Task<bool> Update(User user);
         Task<bool> Delete(int id);
     }

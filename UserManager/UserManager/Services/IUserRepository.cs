@@ -8,7 +8,7 @@ namespace UserManager.Services
         Task<User?> Get(int id, CancellationToken cancellation = default);
         Task<bool> Delete(User user, CancellationToken cancellation = default);
         Task Update(User user, CancellationToken cancellation = default);
-        Task Add(User user, CancellationToken cancellation = default);
+        Task Create(User user, CancellationToken cancellation = default);
         void Seed();
     }
 }

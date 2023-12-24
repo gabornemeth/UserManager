@@ -16,7 +16,9 @@ namespace UserManager.Test.Endpoints
         {
             UserService = new Mock<IUserService>();
             _mapper = new MapperConfiguration(config => config.AddProfile<UserProfile>()).CreateMapper();
-            Endpoint = Factory.Create<TUserEndpoint>(UserService.Object, _mapper);
+            Endpoint = Factory.Create<TUserEndpoint>(GetEndPointConstructorArguments());
         }
+
+        protected virtual object[] GetEndPointConstructorArguments() => [UserService.Object, _mapper];
     }
 }

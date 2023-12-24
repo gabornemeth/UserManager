@@ -24,7 +24,7 @@ namespace UserManager.Test
             var userService = new UserService(_repository.Object, _mapper);
 
             // act
-            var result = await userService.Add(new User { Id = 8 });
+            var result = await userService.Create(new User { Id = 8 });
 
             result.Should().BeFalse();
         }
@@ -37,10 +37,10 @@ namespace UserManager.Test
             var userService = new UserService(_repository.Object, _mapper);
 
             // act
-            var result = await userService.Add(new User { Id = 9 });
+            var result = await userService.Create(new User { Id = 9 });
 
             result.Should().BeTrue();
-            _repository.Verify(r => r.Add(It.Is<User>(usr => usr.Id == 9), It.IsAny<CancellationToken>()), Times.Once());
+            _repository.Verify(r => r.Create(It.Is<User>(usr => usr.Id == 9), It.IsAny<CancellationToken>()), Times.Once());
         }
     }
 }

@@ -1,31 +1,31 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace UserManager.Contracts.Dtos
 {
     public class UserDto
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("username")]
+        [JsonProperty("username")]
         public string UserName { get; set; }
 
-        [JsonPropertyName("email")]
+        [JsonProperty("email")]
         public string Email { get; set; }
 
-        [JsonPropertyName("address")]
+        [JsonProperty("address")]
         public AddressDto Address { get; set; }
 
-        [JsonPropertyName("phone")]
+        [JsonProperty("phone")]
         public string Phone { get; set; }
 
-        [JsonPropertyName("website")]
+        [JsonProperty("website")]
         public string Website { get; set; }
 
-        [JsonPropertyName("company")]
+        [JsonProperty("company")]
         public CompanyDto Company { get; set; }
     }
 }

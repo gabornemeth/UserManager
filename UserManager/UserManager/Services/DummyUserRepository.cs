@@ -13,7 +13,7 @@ namespace UserManager.Services
             _mapper = mapper;
         }
 
-        public Task Add(User user, CancellationToken cancellation = default)
+        public Task Create(User user, CancellationToken cancellation = default)
         {
             _users?.Add(user);
             return Task.CompletedTask;

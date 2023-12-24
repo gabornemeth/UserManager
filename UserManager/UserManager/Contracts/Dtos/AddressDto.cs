@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿
+using Newtonsoft.Json;
 
 namespace UserManager.Contracts.Dtos
 {
@@ -9,16 +10,16 @@ namespace UserManager.Contracts.Dtos
         public string ZipCode { get; set; }
         public string Suite { get; set; }
 
-        [JsonPropertyName("geo")]
+        [JsonProperty("geo")]
         public LocationDto Location { get; set; }
     }
 
     public class LocationDto
     {
-        [JsonPropertyName("lat")]
+        [JsonProperty("lat")]
         public float Latitude { get; set; }
 
-        [JsonPropertyName("lng")]
+        [JsonProperty("lng")]
         public float Longitude { get; set; }
     }
 }
