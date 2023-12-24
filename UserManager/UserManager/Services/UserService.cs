@@ -15,7 +15,7 @@ namespace UserManager.Services
             _mapper = mapper;
         }
 
-        public async Task<bool> Add(UserDto user)
+        public async Task<bool> Add(User user)
         {
             var existingUser = await _repository.Get(user.Id);
             if (existingUser != null)
@@ -25,7 +25,7 @@ namespace UserManager.Services
 
             // TODO: validate some fields
 
-            await _repository.Add(_mapper.Map<User>(user));
+            await _repository.Add(user);
             return true;
         }
 
@@ -40,21 +40,17 @@ namespace UserManager.Services
             return await _repository.Delete(user);
         }
 
-        public async Task<IEnumerable<UserDto>> GetAll(CancellationToken cancellation)
+        public Task<IEnumerable<User>> GetAll(CancellationToken cancellation)
         {
-            var users = await _repository.GetAll(cancellation);
-            return users.Select(_mapper.Map<UserDto>);
+            return _repository.GetAll(cancellation);
         }
 
-        public async Task<UserDto?> Get(int id)
+        public Task<User?> Get(int id)
         {
-            var user = await _repository.Get(id);
-            if (user == null) return null;
-
-            return _mapper.Map<UserDto>(user);
+            return _repository.Get(id);
         }
 
-        public async Task<bool> Update(UserDto user)
+        public async Task<bool> Update(User user)
         {
             var userToUpdate = await _repository.Get(user.Id);
             if (userToUpdate == null)
@@ -64,7 +60,7 @@ namespace UserManager.Services
 
             // TODO: validate some fields
 
-            await _repository.Update(_mapper.Map<User>(user));
+            await _repository.Update(user);
             return true;
         }
     }

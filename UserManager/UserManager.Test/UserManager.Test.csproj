@@ -29,4 +29,8 @@
     <ProjectReference Include="..\UserManager\UserManager.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappings\" />
+  </ItemGroup>
+
 </Project>
