@@ -1,4 +1,4 @@
-﻿namespace UserManager.Mongo
+﻿namespace UserManager.Models
 {
     public class User
     {

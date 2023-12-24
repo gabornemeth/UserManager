@@ -8,7 +8,7 @@ namespace UserManager.Test
         [Fact]
         public void ToJson1()
         {
-            var user = new User { Id = 8, Name = "John Doe" };
+            var user = new UserDto { Id = 8, Name = "John Doe" };
             var json = JsonConvert.SerializeObject(user);
         }
     }

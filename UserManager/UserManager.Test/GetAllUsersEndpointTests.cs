@@ -12,7 +12,7 @@ namespace UserManager.Test
             // setup
             var userService = new Mock<IUserService>();
             userService.Setup(s => s.GetAll(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Array.Empty<User>());
+                .ReturnsAsync(Array.Empty<UserDto>());
             var endpoint = Factory.Create<GetAllUsersEndpoint>(userService.Object);
 
             // act
@@ -29,7 +29,7 @@ namespace UserManager.Test
             // setup
             var userService = new Mock<IUserService>();
             userService.Setup(s => s.GetAll(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new User[5]);
+                .ReturnsAsync(new UserDto[5]);
             var endpoint = Factory.Create<GetAllUsersEndpoint>(userService.Object);
 
             // act

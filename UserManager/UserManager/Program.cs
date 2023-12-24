@@ -7,7 +7,7 @@ using UserManager.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddFastEndpoints().SwaggerDocument();
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile(new MongoDbProfile()));
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile(new UserProfile()));
 
 // Register our own services
 builder.Services.AddScoped<IUserService, UserService>();

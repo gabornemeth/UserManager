@@ -1,44 +1,71 @@
-﻿using UserManager.Dtos;
+﻿using AutoMapper;
+using UserManager.Dtos;
+using UserManager.Models;
 
 namespace UserManager.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository repository)
+        public UserService(IUserRepository repository, IMapper mapper)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _mapper = mapper;
         }
 
-        public Task Add(User user)
+        public async Task<bool> Add(UserDto user)
         {
-            throw new NotImplementedException();
+            var existingUser = await _repository.Get(user.Id);
+            if (existingUser != null)
+            {
+                return false;
+            }
+
+            // TODO: validate some fields
+
+            await _repository.Add(_mapper.Map<User>(user));
+            return true;
         }
 
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var user = await _repository.Get(id);
             if (user == null)
             {
-                throw new ArgumentException();
+                return false;
             }
-            await _repository.Delete(user);
+
+            return await _repository.Delete(user);
         }
 
-        public Task<IEnumerable<User>> GetAll(CancellationToken cancellation)
+        public async Task<IEnumerable<UserDto>> GetAll(CancellationToken cancellation)
         {
-            return _repository.GetAll(cancellation);
+            var users = await _repository.GetAll(cancellation);
+            return users.Select(_mapper.Map<UserDto>);
         }
 
-        public Task<User?> Get(int id)
+        public async Task<UserDto?> Get(int id)
         {
-            return _repository.Get(id);
+            var user = await _repository.Get(id);
+            if (user == null) return null;
+
+            return _mapper.Map<UserDto>(user);
         }
 
-        public Task Update(User user)
+        public async Task<bool> Update(UserDto user)
         {
-            throw new NotImplementedException();
+            var userToUpdate = await _repository.Get(user.Id);
+            if (userToUpdate == null)
+            {
+                return false;
+            }
+
+            // TODO: validate some fields
+
+            await _repository.Update(_mapper.Map<User>(user));
+            return true;
         }
     }
 }

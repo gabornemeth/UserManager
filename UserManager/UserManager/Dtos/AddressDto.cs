@@ -2,7 +2,7 @@
 
 namespace UserManager.Dtos
 {
-    public class Address
+    public class AddressDto
     {
         public string Street { get; set; }
         public string City { get; set; }
@@ -10,10 +10,10 @@ namespace UserManager.Dtos
         public string Suite { get; set; }
 
         [JsonPropertyName("geo")]
-        public Location Location { get; set; }
+        public LocationDto Location { get; set; }
     }
 
-    public class Location
+    public class LocationDto
     {
         [JsonPropertyName("lat")]
         public float Latitude { get; set; }

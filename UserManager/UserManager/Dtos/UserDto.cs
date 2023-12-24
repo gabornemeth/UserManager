@@ -2,7 +2,7 @@
 
 namespace UserManager.Dtos
 {
-    public class User
+    public class UserDto
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace UserManager.Dtos
         public string Email { get; set; }
 
         [JsonPropertyName("address")]
-        public Address Address { get; set; }
+        public AddressDto Address { get; set; }
 
         [JsonPropertyName("phone")]
         public string Phone {  get; set; }
@@ -26,6 +26,6 @@ namespace UserManager.Dtos
         public string Website { get; set; }
 
         [JsonPropertyName("company")]
-        public Company Company { get; set; }
+        public CompanyDto Company { get; set; }
     }
 }

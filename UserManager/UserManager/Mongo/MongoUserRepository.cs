@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MongoDB.Driver;
+using UserManager.Models;
 using UserManager.Services;
 
 namespace UserManager.Mongo
@@ -15,19 +16,19 @@ namespace UserManager.Mongo
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Dtos.User>> GetAll(CancellationToken cancellation)
+        public async Task<IEnumerable<User>> GetAll(CancellationToken cancellation)
         {
             var usersCollection = GetUsersCollection();
             var filter = Builders<User>.Filter.Empty;
             var users = await usersCollection.Find(filter).ToListAsync(cancellation);
-            return users.Select(_mapper.Map<Dtos.User>);
+            return users;
         }
 
-        public async Task<Dtos.User?> Get(int id, CancellationToken cancellation)
+        public async Task<User?> Get(int id, CancellationToken cancellation)
         {
             var usersCollection = GetUsersCollection();
             var user = await usersCollection.Find(u => u.Id == id).FirstOrDefaultAsync(cancellation);
-            return user != null ? _mapper.Map<Dtos.User>(user) : null;
+            return user;
         }
 
         public void Seed()
@@ -42,9 +43,9 @@ namespace UserManager.Mongo
 
                     var usersToAdd = SampleData.GetUsers().Select(u =>
                     {
-                        var userDb = _mapper.Map<User>(u);
-                        BeforeInsert(userDb, usersCollection);
-                        return userDb;
+                        var user = _mapper.Map<User>(u);
+                        user.Id = GetNextId(usersCollection);
+                        return user;
                     });
 
                     usersCollection.InsertMany(usersToAdd);
@@ -53,26 +54,6 @@ namespace UserManager.Mongo
             catch (Exception ex)
             {
             }
-        }
-
-
-        private int _nextId = 0;
-
-        private void BeforeInsert(User user, IMongoCollection<User> users)
-        {
-            if (_nextId == 0)
-            {
-                try
-                {
-                    _nextId = users.Find(_ => true).ToEnumerable().Max(u => u.Id) + 1;
-                }
-                catch
-                {
-                    _nextId = 1; // collection was empty
-                }
-            }
-
-            user.Id = _nextId++;
         }
 
         private IMongoDatabase GetDatabase()
@@ -87,22 +68,42 @@ namespace UserManager.Mongo
             return database.GetCollection<User>("users");
         }
 
-        public async Task Delete(Dtos.User user, CancellationToken cancellation = default)
+        public async Task<bool> Delete(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
-            await usersCollection.DeleteOneAsync(u => u.Id == user.Id);
+            var result = await usersCollection.DeleteOneAsync(u => u.Id == user.Id);
+            return result.DeletedCount == 1;
         }
 
-        public async Task Update(Dtos.User user, CancellationToken cancellation = default)
+        public async Task Update(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
-            await usersCollection.UpdateOneAsync(u => u.Id == user.Id, new UpdateDefinition<User>())
+            await usersCollection.InsertOneAsync(user); // it should overwrite the existing one
         }
 
-        public async Task Add(Dtos.User user, CancellationToken cancellation = default)
+        public async Task Add(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
-            await usersCollection.InsertOneAsync(_mapper.)
+            await usersCollection.InsertOneAsync(user);
+        }
+
+        private int _nextId = 0;
+
+        private int GetNextId(IMongoCollection<User> users)
+        {
+            if (_nextId == 0)
+            {
+                try
+                {
+                    _nextId = users.Find(_ => true).ToEnumerable().Max(u => u.Id) + 1;
+                }
+                catch
+                {
+                    _nextId = 1; // collection was empty
+                }
+            }
+
+            return _nextId++;
         }
     }
 }

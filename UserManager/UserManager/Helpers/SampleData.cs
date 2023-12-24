@@ -5,10 +5,10 @@ namespace UserManager.Helpers
 {
     internal class SampleData
     {
-        public static IEnumerable<User> GetUsers()
+        public static IEnumerable<UserDto> GetUsers()
         {
             var sampleData = File.ReadAllText("sample.json");
-            return JsonConvert.DeserializeObject<User[]>(sampleData) ?? [];
+            return JsonConvert.DeserializeObject<UserDto[]>(sampleData) ?? [];
         }
     }
 }

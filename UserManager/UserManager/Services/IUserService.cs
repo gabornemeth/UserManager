@@ -4,11 +4,11 @@ namespace UserManager.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> GetAll(CancellationToken cancellation = default);
+        Task<IEnumerable<UserDto>> GetAll(CancellationToken cancellation = default);
         
-        Task<User?> Get(int id);
-        Task Add(User user);
-        Task Update(User user);
-        Task Delete(int id);
+        Task<UserDto?> Get(int id);
+        Task<bool> Add(UserDto user);
+        Task<bool> Update(UserDto user);
+        Task<bool> Delete(int id);
     }
 }

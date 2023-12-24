@@ -8,7 +8,7 @@ namespace UserManager.Endpoints
 {
     [HttpGet("users/{id:int}")]
     [AllowAnonymous]
-    public class GetUserEndpoint : Endpoint<GetUserRequest, User?>
+    public class GetUserEndpoint : Endpoint<GetUserRequest, UserDto?>
     {
         private readonly IUserService _userService;
 

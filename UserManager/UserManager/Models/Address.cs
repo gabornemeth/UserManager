@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace UserManager.Mongo
+﻿namespace UserManager.Models
 {
     public class Address
     {
@@ -11,10 +9,5 @@ namespace UserManager.Mongo
         public Location Location { get; set; }
     }
 
-    public class Location
-    {
-        public float Latitude { get; set; }
-
-        public float Longitude { get; set; }
-    }
+    public record Location(float Latitude, float Longitude);
 }
