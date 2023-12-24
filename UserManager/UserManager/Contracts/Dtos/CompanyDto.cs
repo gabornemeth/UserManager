@@ -1,9 +1,16 @@
-﻿namespace UserManager.Contracts.Dtos
+﻿using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+
+namespace UserManager.Contracts.Dtos
 {
     public class CompanyDto
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
+        
         public string? CatchPhrase { get; set; }
-        public string? Bs { get; set; }
+
+        [JsonProperty("bs")]
+        [JsonPropertyName("bs")]
+        public string? BusinessServices { get; set; }
     }
 }
