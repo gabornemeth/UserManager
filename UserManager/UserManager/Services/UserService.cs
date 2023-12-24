@@ -1,23 +1,19 @@
-﻿using AutoMapper;
-using UserManager.Contracts.Dtos;
-using UserManager.Models;
+﻿using UserManager.Models;
 
 namespace UserManager.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
-        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository repository, IMapper mapper)
+        public UserService(IUserRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _mapper = mapper;
         }
 
-        public async Task<bool> Create(User user)
+        public async Task<bool> Create(User user, CancellationToken cancellationToken = default)
         {
-            var existingUser = await _repository.Get(user.Id);
+            var existingUser = await _repository.Get(user.Id, cancellationToken);
             if (existingUser != null)
             {
                 return false;
@@ -29,9 +25,9 @@ namespace UserManager.Services
             return true;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id, CancellationToken cancellationToken = default)
         {
-            var user = await _repository.Get(id);
+            var user = await _repository.Get(id, cancellationToken);
             if (user == null)
             {
                 return false;
@@ -40,17 +36,17 @@ namespace UserManager.Services
             return await _repository.Delete(user);
         }
 
-        public Task<IEnumerable<User>> GetAll(CancellationToken cancellation)
+        public Task<IEnumerable<User>> GetAll(CancellationToken cancellation = default)
         {
             return _repository.GetAll(cancellation);
         }
 
-        public Task<User?> Get(int id)
+        public Task<User?> Get(int id, CancellationToken cancellationToken = default)
         {
-            return _repository.Get(id);
+            return _repository.Get(id, cancellationToken);
         }
 
-        public async Task<bool> Update(User user)
+        public async Task<bool> Update(User user, CancellationToken cancellationToken = default)
         {
             var userToUpdate = await _repository.Get(user.Id);
             if (userToUpdate == null)

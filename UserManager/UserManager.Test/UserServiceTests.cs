@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using UserManager.Mappings;
-using UserManager.Models;
+﻿using UserManager.Models;
 using UserManager.Services;
 
 namespace UserManager.Test
@@ -8,11 +6,9 @@ namespace UserManager.Test
     public class UserServiceTests
     {
         private readonly Mock<IUserRepository> _repository;
-        private readonly IMapper _mapper;
 
         public UserServiceTests()
         {
-            _mapper = new MapperConfiguration(config => config.AddProfile<UserProfile>()).CreateMapper();
             _repository = new Mock<IUserRepository>();
         }
 
@@ -21,7 +17,7 @@ namespace UserManager.Test
         {
             _repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User { Id = 8 });
-            var userService = new UserService(_repository.Object, _mapper);
+            var userService = new UserService(_repository.Object);
 
             // act
             var result = await userService.Create(new User { Id = 8 });
@@ -34,7 +30,7 @@ namespace UserManager.Test
         {
             _repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User { Id = 8 });
-            var userService = new UserService(_repository.Object, _mapper);
+            var userService = new UserService(_repository.Object);
 
             // act
             var result = await userService.Create(new User { Id = 9 });

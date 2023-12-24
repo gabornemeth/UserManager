@@ -24,8 +24,10 @@ namespace UserManager.Endpoints
             {
                 await SendNotFoundAsync(cancellation: ct);
             }
-         
-            await SendOkAsync(_services.Mapper.Map<UserDto>(user), cancellation: ct);
+            else
+            {
+                await SendOkAsync(_services.Mapper.Map<UserDto>(user), cancellation: ct);
+            }
         }
     }
 }
