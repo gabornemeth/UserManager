@@ -20,8 +20,9 @@ namespace UserManager.Test
             users.Should().HaveCount(10);
             var firstUser = users.First();
             firstUser.Name.Should().Be("Leanne Graham");
-            firstUser.Address.Should().NotBeNull();
             firstUser.Address.Location.Should().NotBeNull();
+            firstUser.Address.Location!.Latitude.Should().NotBe(0.0f);
+            firstUser.Address.Location!.Latitude.Should().NotBe(0.0f);
         }
     }
 }

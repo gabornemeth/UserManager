@@ -13,7 +13,7 @@ namespace UserManager.Test.Endpoints
             UserService.Setup(srv => srv.Update(It.IsAny<User>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(false);
 
-            await Endpoint.HandleAsync(new UserDto { Id = 2, Name = "New John" }, CancellationToken.None);
+            await Endpoint.HandleAsync(new UserDto { Id = 2, Name = "John New" }, CancellationToken.None);
 
             Endpoint.HttpContext.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
         }
@@ -24,7 +24,7 @@ namespace UserManager.Test.Endpoints
             UserService.Setup(srv => srv.Update(It.IsAny<User>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
 
-            await Endpoint.HandleAsync(new UserDto { Id = 2, Name = "New John" }, CancellationToken.None);
+            await Endpoint.HandleAsync(new UserDto { Id = 2, Name = "John New" }, CancellationToken.None);
 
             Endpoint.HttpContext.Response.StatusCode.Should().Be(StatusCodes.Status200OK);
         }
