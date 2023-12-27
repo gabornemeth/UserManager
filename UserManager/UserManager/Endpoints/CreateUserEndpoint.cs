@@ -1,6 +1,8 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using UserManager.Contracts.Dtos;
+using UserManager.Contracts.Requests;
+using UserManager.Contracts.Responses;
 using UserManager.Models;
 using UserManager.Services;
 
@@ -8,7 +10,7 @@ namespace UserManager.Endpoints
 {
     [HttpPost("users")]
     [AllowAnonymous]
-    public partial class CreateUserEndpoint : Endpoint<UserDto>
+    public partial class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse>
     {
         private readonly UserEndpointServices _services;
 
@@ -17,13 +19,13 @@ namespace UserManager.Endpoints
             _services = new UserEndpointServices(userService, mapper);
         }
 
-        public override async Task HandleAsync(UserDto req, CancellationToken ct)
+        public override async Task HandleAsync(CreateUserRequest req, CancellationToken ct)
         {
             var userToCreate = _services.Mapper.Map<User>(req);
             var created = await _services.UserService.Create(userToCreate);
             if (created)
             {
-                await SendOkAsync(ct);
+                await SendOkAsync(new CreateUserResponse(userToCreate.Id), ct);
             }
             else
             {

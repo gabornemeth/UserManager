@@ -1,12 +1,13 @@
 ﻿using FastEndpoints;
 using UserManager.Contracts.Dtos;
+using UserManager.Contracts.Requests;
 using UserManager.Models;
 using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
     [HttpPut("users")]
-    public class UpdateUserEndpoint : Endpoint<UserDto>
+    public class UpdateUserEndpoint : Endpoint<UpdateUserRequest>
     {
         private readonly UserEndpointServices _services;
 
@@ -15,7 +16,7 @@ namespace UserManager.Endpoints
             _services = new UserEndpointServices(userService, mapper);
         }
 
-        public override async Task HandleAsync(UserDto req, CancellationToken ct)
+        public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)
         {
             var userToUpdate = _services.Mapper.Map<User>(req);
             var updated = await _services.UserService.Update(userToUpdate);
