@@ -4,19 +4,19 @@ using UserManager.Contracts.Dtos;
 
 namespace UserManager.Validators
 {
-    public class UserDtoValidator : Validator<UserDto>
+    public class CreateUserDtoValidator : Validator<CreateUserDto>
     {
-        public UserDtoValidator()
+        public CreateUserDtoValidator()
         {
             RuleFor(u => u.Name)
                 .NotEmpty()
-                .WithMessage($"{nameof(UserDto.Name)} is required");
+                .WithMessage($"{nameof(CreateUserDto.Name)} is required");
             RuleFor(u => u.UserName)
                 .NotEmpty()
-                .WithMessage($"{nameof(UserDto.UserName)} is required");
+                .WithMessage($"{nameof(CreateUserDto.UserName)} is required");
             RuleFor(u => u.Email)
                 .NotEmpty()
-                .WithMessage($"{nameof(UserDto.Email)} is required");
+                .WithMessage($"{nameof(CreateUserDto.Email)} is required");
         }
     }
 }

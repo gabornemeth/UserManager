@@ -1,6 +1,5 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Authorization;
-using UserManager.Contracts.Dtos;
 using UserManager.Contracts.Requests;
 using UserManager.Contracts.Responses;
 using UserManager.Models;
@@ -25,7 +24,8 @@ namespace UserManager.Endpoints
             var created = await _services.UserService.Create(userToCreate);
             if (created)
             {
-                await SendOkAsync(new CreateUserResponse(userToCreate.Id), ct);
+                var response = new CreateUserResponse(userToCreate.Id, userToCreate.Name);
+                await SendCreatedAtAsync<GetUserEndpoint>(new { Id = response.Id }, response, cancellation: ct, generateAbsoluteUrl: false);
             }
             else
             {

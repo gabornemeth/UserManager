@@ -11,18 +11,11 @@ namespace UserManager.Mappings
     {
         public UserProfile()
         {
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
-                //.ForMember(u => u.Id, opt => opt.Ignore()); // skip Id
-
-            CreateMap<AddressDto, Address>();
-            CreateMap<Address, AddressDto>();
-
-            CreateMap<LocationDto, Location>();
-            CreateMap<Location, LocationDto>();
-
-            CreateMap<CompanyDto, Company>();
-            CreateMap<Company, CompanyDto>();
+            CreateMap<CreateUserDto, User>();
+            CreateMap<UserDto, User>().ReverseMap();
+            CreateMap<AddressDto, Address>().ReverseMap();
+            CreateMap<LocationDto, Location>().ReverseMap();
+            CreateMap<CompanyDto, Company>().ReverseMap();
         }
     }
 }

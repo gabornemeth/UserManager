@@ -29,7 +29,7 @@ namespace UserManager.Test.Validators
 
         private ValidationResult ShouldFail(UserDto user)
         {
-            var validator = new UserDtoValidator();
+            var validator = new CreateUserDtoValidator();
             var result = validator.Validate(user);
             result.IsValid.Should().BeFalse();
             return result;
@@ -38,7 +38,7 @@ namespace UserManager.Test.Validators
         [Fact]
         public void AllRequiredFieldsFilled_Success()
         {
-            var validator = new UserDtoValidator();
+            var validator = new CreateUserDtoValidator();
             var result = validator.Validate(new UserDto
             {
                 Name = "John Doe",

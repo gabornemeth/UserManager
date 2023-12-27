@@ -84,6 +84,7 @@ namespace UserManager.Mongo
         public async Task Create(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
+            user.Id = GetNextId(usersCollection);
             await usersCollection.InsertOneAsync(user);
         }
 

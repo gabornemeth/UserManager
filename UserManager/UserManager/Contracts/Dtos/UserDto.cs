@@ -3,10 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace UserManager.Contracts.Dtos
 {
-    public class UserDto
+    public class UserDto : CreateUserDto
     {
         public int Id { get; set; }
+    }
 
+    public class CreateUserDto
+    {
         public string Name { get; set; }
 
         [JsonProperty("username")]

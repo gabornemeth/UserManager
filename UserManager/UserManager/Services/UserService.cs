@@ -13,10 +13,13 @@ namespace UserManager.Services
 
         public async Task<bool> Create(User user, CancellationToken cancellationToken = default)
         {
-            var existingUser = await _repository.Get(user.Id, cancellationToken);
-            if (existingUser != null)
+            if (user.Id != 0)
             {
-                return false;
+                var existingUser = await _repository.Get(user.Id, cancellationToken);
+                if (existingUser != null)
+                {
+                    return false;
+                }
             }
 
             // TODO: validate some fields

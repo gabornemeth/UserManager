@@ -5,6 +5,6 @@ namespace UserManager.Contracts.Requests
 {
     public class PartialUpdateUserRequest : JsonPatchDocument<UserDto>
     {
-
+        public int Id { get; set; }
     }
 }
