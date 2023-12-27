@@ -8,10 +8,12 @@ namespace UserManager.Contracts.Dtos
     {
         [JsonProperty("lat")]
         [JsonPropertyName("lat")]
-        public float Latitude { get; set; }
+        public float Latitude { get; set; } = float.NaN;
 
         [JsonProperty("lng")]
         [JsonPropertyName("lng")]
-        public float Longitude { get; set; }
+        public float Longitude { get; set; } = float.NaN;
+
+        public bool IsEmpty() => float.IsNaN(Latitude) && float.IsNaN(Longitude);
     }
 }

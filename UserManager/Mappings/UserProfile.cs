@@ -11,11 +11,21 @@ namespace UserManager.Mappings
     {
         public UserProfile()
         {
-            CreateMap<CreateUserDto, User>();
-            CreateMap<UserDto, User>().ReverseMap();
-            CreateMap<AddressDto, Address>().ReverseMap();
             CreateMap<LocationDto, Location>().ReverseMap();
+            CreateMap<AddressDto, Address>()
+                .ForMember(a => a.GeoLocation, opt => opt.Condition(a => !a.Geolocation?.IsEmpty() ?? true));
+            CreateMap<Address, AddressDto>();
+
             CreateMap<CompanyDto, Company>().ReverseMap();
+
+            CreateMap<CreateUserDto, User>()
+                .ForMember(u => u.Company, opt => opt.Condition(u => !u.Company?.IsEmpty() ?? true))
+                .ForMember(u => u.Address, opt => opt.Condition(u => !u.Address?.IsEmpty() ?? true));
+            CreateMap<UserDto, User>()
+                .ForMember(u => u.Company, opt => opt.Condition(u => !u.Company?.IsEmpty() ?? true))
+                .ForMember(u => u.Address, opt => opt.Condition(u => !u.Address?.IsEmpty() ?? true));
+
+            CreateMap<User, UserDto>();
         }
     }
 }

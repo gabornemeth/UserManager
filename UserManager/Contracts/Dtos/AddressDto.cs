@@ -5,13 +5,19 @@ namespace UserManager.Contracts.Dtos
 {
     public class AddressDto
     {
-        public required string Street { get; set; }
-        public required string City { get; set; }
-        public required string ZipCode { get; set; }
+        public string? Street { get; set; }
+        public string? City { get; set; }
+        public string? ZipCode { get; set; }
         public string? Suite { get; set; }
 
         [JsonProperty("geo")]
         [JsonPropertyName("geo")]
-        public LocationDto? Location { get; set; }
+        public LocationDto? Geolocation { get; set; }
+
+        public bool IsEmpty() => string.IsNullOrEmpty(City) &&
+            string.IsNullOrEmpty(ZipCode) &&
+            string.IsNullOrEmpty(Street) &&
+            string.IsNullOrEmpty(Suite) &&
+            (Geolocation?.IsEmpty() ?? true);
     }
 }

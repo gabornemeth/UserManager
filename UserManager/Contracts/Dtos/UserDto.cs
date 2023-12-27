@@ -19,13 +19,13 @@ namespace UserManager.Contracts.Dtos
 
         public string Email { get; set; }
 
-        public AddressDto Address { get; set; }
+        public AddressDto? Address { get; set; }
 
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         public string? Website { get; set; }
 
         [JsonProperty("company")]
-        public CompanyDto Company { get; set; }
+        public CompanyDto? Company { get; set; }
     }
 }

@@ -14,5 +14,10 @@ namespace UserManager.Contracts.Dtos
         [JsonProperty("bs")]
         [JsonPropertyName("bs")]
         public string? BusinessServices { get; set; }
+
+        public bool IsEmpty() =>
+            string.IsNullOrEmpty(Name) &&
+            string.IsNullOrEmpty(CatchPhrase) &&
+            string.IsNullOrEmpty(BusinessServices);
     }
 }

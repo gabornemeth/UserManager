@@ -1,12 +1,11 @@
 ﻿using FastEndpoints;
-using UserManager.Contracts.Dtos;
 using UserManager.Contracts.Requests;
 using UserManager.Models;
 using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    [HttpPut("users")]
+    [HttpPut("users/{id}")]
     public class UpdateUserEndpoint : Endpoint<UpdateUserRequest>
     {
         private readonly UserEndpointServices _services;
