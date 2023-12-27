@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MongoDB.Driver;
+using System.Linq.Expressions;
 using UserManager.Models;
 using UserManager.Services;
 
@@ -71,14 +72,23 @@ namespace UserManager.Mongo
         public async Task<bool> Delete(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
-            var result = await usersCollection.DeleteOneAsync(u => u.Id == user.Id);
+            var result = await usersCollection.DeleteOneAsync(GetFilter(user));
             return result.DeletedCount == 1;
         }
 
         public async Task Update(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
-            await usersCollection.InsertOneAsync(user); // it should overwrite the existing one
+            var update = Builders<User>.Update
+                .Set(u => u.Name, user.Name)
+                .Set(u => u.UserName, user.UserName)
+                .Set(u => u.Email, user.Email)
+                .Set(u => u.Website, user.Website)
+                .Set(u => u.Phone, user.Phone)
+                .Set(u => u.Address, user.Address)
+                .Set(u => u.Company, user.Company);
+
+            await usersCollection.UpdateOneAsync(GetFilter(user), update);
         }
 
         public async Task Create(User user, CancellationToken cancellation = default)
@@ -87,6 +97,8 @@ namespace UserManager.Mongo
             user.Id = GetNextId(usersCollection);
             await usersCollection.InsertOneAsync(user);
         }
+
+        private Expression<Func<User, bool>> GetFilter(User user) => u => u.Id == user.Id;
 
         private int _nextId = 0;
 

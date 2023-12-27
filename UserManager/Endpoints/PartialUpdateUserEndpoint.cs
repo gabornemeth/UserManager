@@ -28,7 +28,7 @@ namespace UserManager.Endpoints
             try
             {
                 var dtoToPatch = _services.Mapper.Map<UserDto>(userToPatch);
-                req.ApplyTo(dtoToPatch);
+                req.Update.ApplyTo(dtoToPatch);
                 userToPatch = _services.Mapper.Map<User>(dtoToPatch);
             }
             catch

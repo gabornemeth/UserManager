@@ -10,6 +10,7 @@ namespace UserManager.Contracts.Dtos
 
     public class CreateUserDto
     {
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("username")]

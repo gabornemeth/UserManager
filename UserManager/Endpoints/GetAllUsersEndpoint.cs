@@ -1,16 +1,19 @@
 ﻿using FastEndpoints;
-using Microsoft.AspNetCore.Authorization;
 using UserManager.Contracts.Dtos;
 using UserManager.Contracts.Responses;
 using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    [HttpGet("users")]
-    [AllowAnonymous]
     public class GetAllUsersEndpoint : EndpointWithoutRequest<GetAllUsersResponse>
     {
         private readonly UserEndpointServices _services;
+
+        public override void Configure()
+        {
+            Get("users");
+            //Roles("poweruser", "admin");
+        }
 
         public GetAllUsersEndpoint(IUserService userService, IMapper mapper)
         {

@@ -6,7 +6,6 @@ using UserManager.Services;
 namespace UserManager.Endpoints
 {
     [HttpDelete("users/{id}")]
-    [AllowAnonymous]
     public class DeleteUserEndPoint : Endpoint<DeleteUserRequest>
     {
         private readonly IUserService _userService;

@@ -8,7 +8,6 @@ using UserManager.Services;
 namespace UserManager.Endpoints
 {
     [HttpPost("users")]
-    [AllowAnonymous]
     public partial class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse>
     {
         private readonly UserEndpointServices _services;

@@ -42,8 +42,8 @@ namespace UserManager.Test.Endpoints
                 .ReturnsAsync(true);
 
             var patchRequest = new PartialUpdateUserRequest { Id = 2 };
-            patchRequest.Add(u => u.Name, "John Updated");
-            patchRequest.Add(u => u.Email, "john.updated@company.net");
+            patchRequest.Update.Add(u => u.Name, "John Updated");
+            patchRequest.Update.Add(u => u.Email, "john.updated@company.net");
             await Endpoint.HandleAsync(patchRequest, CancellationToken.None);
 
             Func<User, bool> updateVerifier = u => u.Id == 2 && u.Name == "John Updated" && u.Email == "john.updated@company.net";
