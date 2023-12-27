@@ -25,6 +25,7 @@ namespace UserManager.Contracts.Dtos
 
         public string? Website { get; set; }
 
+        [JsonProperty("company")]
         public CompanyDto Company { get; set; }
     }
 }

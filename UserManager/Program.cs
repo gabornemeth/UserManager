@@ -1,8 +1,11 @@
+using System.Runtime.CompilerServices;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using UserManager.Mappings;
 using UserManager.Mongo;
 using UserManager.Services;
+
+[assembly:InternalsVisibleTo("UserManager.Test")] ;
 
 var builder = WebApplication.CreateBuilder(args);
 

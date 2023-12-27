@@ -5,8 +5,10 @@ namespace UserManager.Contracts.Dtos
 {
     public class CompanyDto
     {
-        public required string Name { get; set; }
-        
+        [JsonProperty("name")]
+        public string? Name { get; set; }
+
+        [JsonProperty("catchPhrase")]
         public string? CatchPhrase { get; set; }
 
         [JsonProperty("bs")]
