@@ -1,14 +1,17 @@
-﻿using UserManager.Models;
+﻿using FluentValidation;
+using UserManager.Models;
 
 namespace UserManager.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _repository;
+        private readonly AbstractValidator<User>? _validator;
 
-        public UserService(IUserRepository repository)
+        public UserService(IUserRepository repository, AbstractValidator<User>? validator)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _validator = validator;
         }
 
         public async Task<bool> Create(User user, CancellationToken cancellationToken = default)
@@ -22,7 +25,10 @@ namespace UserManager.Services
                 }
             }
 
-            // TODO: validate some fields
+            if (_validator?.Validate(user).IsValid == false)
+            {
+                return false;
+            }
 
             await _repository.Create(user);
             return true;
@@ -57,7 +63,10 @@ namespace UserManager.Services
                 return false;
             }
 
-            // TODO: validate some fields
+            if (_validator?.Validate(user).IsValid == false)
+            {
+                return false;
+            }
 
             await _repository.Update(user);
             return true;

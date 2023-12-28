@@ -1,17 +1,17 @@
 ﻿using UserManager.Models;
 using UserManager.Services;
 
-namespace UserManager.Test
+namespace UserManager.Test.Services
 {
-    public class UserServiceTests
+    public class UserServiceTestsWithoutValidation
     {
         private readonly Mock<IUserRepository> _repository;
         private readonly UserService _userService;
 
-        public UserServiceTests()
+        public UserServiceTestsWithoutValidation()
         {
             _repository = new Mock<IUserRepository>();
-            _userService = new UserService(_repository.Object);
+            _userService = new UserService(_repository.Object, null);
         }
 
         [Fact]

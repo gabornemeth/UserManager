@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using FluentValidation;
 using UserManager.Mappings;
 using UserManager.Mongo;
 using UserManager.Services;
@@ -16,6 +16,7 @@ builder.Services.AddAuthentication().AddJwtBearer(options => options.Audience = 
 builder.Services.AddAuthorization();
 
 // Register our own services
+builder.Services.AddScoped<AbstractValidator<UserManager.Models.User>>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, MongoUserRepository>();
 var app = builder.Build();
