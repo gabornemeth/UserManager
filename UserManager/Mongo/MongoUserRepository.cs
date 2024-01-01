@@ -3,21 +3,24 @@ using MongoDB.Driver;
 using System.Linq.Expressions;
 using UserManager.Models;
 using UserManager.Services;
+using YamlDotNet.Serialization.NodeTypeResolvers;
 
 namespace UserManager.Mongo
 {
     public class MongoUserRepository : IUserRepository
     {
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-
-        public MongoUserRepository(IConfiguration config, IMapper mapper)
+        private readonly MongoClient _client;
+        private readonly string _databaseName;
+        
+        public MongoUserRepository(string connectionString, string databaseName, IMapper mapper)
         {
-            _configuration = config;
+            _client = new MongoClient(connectionString);
+            _databaseName = databaseName;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<User>> GetAll(CancellationToken cancellation)
+        public async Task<IEnumerable<User>> GetAll(CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
             var filter = Builders<User>.Filter.Empty;
@@ -25,7 +28,7 @@ namespace UserManager.Mongo
             return users;
         }
 
-        public async Task<User?> Get(int id, CancellationToken cancellation)
+        public async Task<User?> Get(int id, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
             var user = await usersCollection.Find(u => u.Id == id).FirstOrDefaultAsync(cancellation);
@@ -59,8 +62,7 @@ namespace UserManager.Mongo
 
         private IMongoDatabase GetDatabase()
         {
-            var client = new MongoClient(_configuration["MongoDB:ConnectionString"]);
-            return client.GetDatabase(_configuration["MongoDB:Database"]);
+            return _client.GetDatabase(_databaseName);
         }
 
         private IMongoCollection<User> GetUsersCollection()
