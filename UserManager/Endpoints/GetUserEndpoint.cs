@@ -5,7 +5,6 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    [HttpGet("users/{id:int}")]
     public class GetUserEndpoint : Endpoint<GetUserRequest, UserDto?>
     {
         private readonly UserEndpointServices _services;
@@ -13,6 +12,12 @@ namespace UserManager.Endpoints
         public GetUserEndpoint(IUserService userService, IMapper mapper)
         {
             _services = new UserEndpointServices(userService, mapper);
+        }
+
+        public override void Configure()
+        {
+            Get("users/{id:int}");
+            Permissions(Scopes.Read);
         }
 
         public override async Task HandleAsync(GetUserRequest req, CancellationToken ct)

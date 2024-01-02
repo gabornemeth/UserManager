@@ -6,7 +6,6 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    [HttpPatch("users/{id}")]
     public class UpdateUserEndpoint : Endpoint<PartialUpdateUserRequest>
     {
         private readonly UserEndpointServices _services;
@@ -14,6 +13,12 @@ namespace UserManager.Endpoints
         public UpdateUserEndpoint(IUserService userService, IMapper mapper)
         {
             _services = new UserEndpointServices(userService, mapper);
+        }
+
+        public override void Configure()
+        {
+            Patch("users/{id}");
+            Permissions(Scopes.Write);
         }
 
         public override async Task HandleAsync(PartialUpdateUserRequest req, CancellationToken ct)

@@ -5,7 +5,6 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    [HttpPut("users/{id}")]
     public class ReplaceUserEndpoint : Endpoint<UpdateUserRequest>
     {
         private readonly UserEndpointServices _services;
@@ -13,6 +12,12 @@ namespace UserManager.Endpoints
         public ReplaceUserEndpoint(IUserService userService, IMapper mapper)
         {
             _services = new UserEndpointServices(userService, mapper);
+        }
+
+        public override void Configure()
+        {
+            Put("users/{id}");
+            Permissions(Scopes.Write);
         }
 
         public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)

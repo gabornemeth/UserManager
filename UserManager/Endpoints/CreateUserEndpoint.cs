@@ -6,8 +6,6 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-
-    [HttpPost("users")]
     public class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse>
     {
         private readonly UserEndpointServices _services;
@@ -15,6 +13,12 @@ namespace UserManager.Endpoints
         public CreateUserEndpoint(IUserService userService, IMapper mapper)
         {
             _services = new UserEndpointServices(userService, mapper);
+        }
+
+        public override void Configure()
+        {
+            Post("users");
+            Permissions(Scopes.Write);
         }
 
         public override async Task HandleAsync(CreateUserRequest req, CancellationToken ct)

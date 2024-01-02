@@ -4,7 +4,6 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    [HttpDelete("users/{id}")]
     public class DeleteUserEndpoint : Endpoint<DeleteUserRequest>
     {
         private readonly IUserService _userService;
@@ -12,6 +11,12 @@ namespace UserManager.Endpoints
         public DeleteUserEndpoint(IUserService userService)
         {
             _userService = userService;
+        }
+
+        public override void Configure()
+        {
+            Delete("users/{id}");
+            Permissions(Scopes.Write);
         }
 
         public override async Task HandleAsync(DeleteUserRequest req, CancellationToken ct)

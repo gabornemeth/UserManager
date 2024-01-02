@@ -23,5 +23,4 @@ RUN dotnet publish "./UserManager.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-RUN dotnet dev-certs https --trust
-ENTRYPOINT ["dotnet", "UserManager.dll", "-d"]
+ENTRYPOINT ["dotnet", "UserManager.dll"]
