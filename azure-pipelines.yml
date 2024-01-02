@@ -11,7 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  solution: "UserManager/UserManager.sln"
+  solution: "UserManager.sln"
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration) $(solution)
