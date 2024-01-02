@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace UserManager.Contracts.Dtos
 {
-    public class UserDto : CreateUserDto
+    public class UserDto : UserDtoWithoutIdentifier
     {
         public int Id { get; set; }
     }
 
-    public class CreateUserDto
+    public class UserDtoWithoutIdentifier
     {
         [JsonProperty("name")]
         public string Name { get; set; }

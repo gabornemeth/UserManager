@@ -9,10 +9,11 @@ namespace UserManager.Test.Services
 {
     public class DbFixture : IAsyncLifetime
     {
-        private MongoDbContainer _container;
+        private MongoDbContainer? _container;
 
         public async Task DisposeAsync()
         {
+            if (_container == null) return;
             await _container.StopAsync();
             await _container.DisposeAsync();
         }
@@ -26,7 +27,7 @@ namespace UserManager.Test.Services
             await _container.StartAsync();
         }
 
-        public string GetConnectionString() => _container.GetConnectionString();
+        public string GetConnectionString() => _container?.GetConnectionString() ?? "";
     }
 
     public class MongoUserRepositoryTests : IClassFixture<DbFixture>
@@ -47,9 +48,9 @@ namespace UserManager.Test.Services
         {
             var allUsers = await _repository.GetAll();
             var userToGet = allUsers.FirstOrDefault(u => u.Name == "Patricia Lebsack");
-            userToGet.Should().NotBeNull();
+            Assert.NotNull(userToGet);
 
-            var user = await _repository.Get(userToGet!.Id);
+            var user = await _repository.Get(userToGet.Id);
             Assert.NotNull(user);
 
             user.Name.Should().Be("Patricia Lebsack");
@@ -95,9 +96,9 @@ namespace UserManager.Test.Services
         {
             var users = await _repository.GetAll();
             var userToDelete = users.FirstOrDefault(u => u.Name == "Nicholas Runolfsdottir V");
-            userToDelete.Should().NotBeNull();
+            Assert.NotNull(userToDelete);
 
-            var deleteResult = await _repository.Delete(userToDelete!);
+            var deleteResult = await _repository.Delete(userToDelete);
             deleteResult.Should().BeTrue();
 
             users = await _repository.GetAll();

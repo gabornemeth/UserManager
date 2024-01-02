@@ -5,6 +5,7 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
+
     public class GetAllUsersEndpoint : EndpointWithoutRequest<GetAllUsersResponse>
     {
         private readonly UserEndpointServices _services;

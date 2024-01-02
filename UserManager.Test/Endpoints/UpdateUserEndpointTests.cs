@@ -5,7 +5,7 @@ using UserManager.Models;
 
 namespace UserManager.Test.Endpoints
 {
-    public class UpdateUserEndpointTests : UserEndpointTests<UpdateUserEndpoint>
+    public class UpdateUserEndpointTests : UserEndpointTests<ReplaceUserEndpoint>
     {
         [Fact]
         public async Task CannotUpdate_Failure()

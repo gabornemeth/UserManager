@@ -1,6 +1,4 @@
 ﻿using FastEndpoints;
-using Microsoft.AspNetCore.Authorization;
-using UserManager.Contracts.Dtos;
 using UserManager.Contracts.Requests;
 using UserManager.Contracts.Responses;
 using UserManager.Models;
@@ -8,8 +6,9 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
+
     [HttpPost("users")]
-    public partial class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse>
+    public class CreateUserEndpoint : Endpoint<CreateUserRequest, CreateUserResponse>
     {
         private readonly UserEndpointServices _services;
 

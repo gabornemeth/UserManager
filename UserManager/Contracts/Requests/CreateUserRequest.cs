@@ -2,7 +2,7 @@
 
 namespace UserManager.Contracts.Requests
 {
-    public class CreateUserRequest : CreateUserDto
+    public class CreateUserRequest : UserDtoWithoutIdentifier
     {
     }
 }

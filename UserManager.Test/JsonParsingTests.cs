@@ -15,9 +15,9 @@ namespace UserManager.Test
             users.Should().HaveCount(10);
             var firstUser = users.First();
             firstUser.Name.Should().Be("Leanne Graham");
-            firstUser.Address?.Geolocation.Should().NotBeNull();
-            firstUser.Address!.Geolocation!.Latitude.Should().NotBe(0.0f);
-            firstUser.Address!.Geolocation!.Latitude.Should().NotBe(0.0f);
+            Assert.NotNull(firstUser.Address?.Geolocation);
+            firstUser.Address.Geolocation.Latitude.Should().NotBe(0.0f);
+            firstUser.Address.Geolocation.Latitude.Should().NotBe(0.0f);
         }
 
         [Fact]
@@ -72,10 +72,10 @@ namespace UserManager.Test
             var user = ApplyPatch(new UserDto(),
                 """{ update: [ { op: "replace", "path": "/company", "value": { "name": "Microsoft", "catchPhrase": "M$", "bs": "software development" } } ] }""");
 
-            user.Company.Should().NotBeNull();
-            user.Company!.Name.Should().Be("Microsoft");
-            user.Company!.CatchPhrase.Should().Be("M$");
-            user.Company!.BusinessServices.Should().Be("software development");
+            Assert.NotNull(user.Company);
+            user.Company.Name.Should().Be("Microsoft");
+            user.Company.CatchPhrase.Should().Be("M$");
+            user.Company.BusinessServices.Should().Be("software development");
         }
 
         [Fact]

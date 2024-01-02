@@ -18,7 +18,7 @@ namespace UserManager.Mappings
 
             CreateMap<CompanyDto, Company>().ReverseMap();
 
-            CreateMap<CreateUserDto, User>()
+            CreateMap<UserDtoWithoutIdentifier, User>()
                 .ForMember(u => u.Company, opt => opt.Condition(u => !u.Company?.IsEmpty() ?? true))
                 .ForMember(u => u.Address, opt => opt.Condition(u => !u.Address?.IsEmpty() ?? true));
             CreateMap<UserDto, User>()

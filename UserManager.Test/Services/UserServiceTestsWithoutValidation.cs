@@ -138,8 +138,8 @@ namespace UserManager.Test.Services
             var user = await UserService.Get(10);
 
             // assert
-            user.Should().NotBeNull();
-            user!.Name.Should().Be("Test User");
+            Assert.NotNull(user);
+            user.Name.Should().Be("Test User");
         }
     }
 }

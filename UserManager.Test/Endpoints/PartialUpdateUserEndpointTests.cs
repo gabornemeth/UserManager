@@ -5,7 +5,7 @@ using UserManager.Models;
 
 namespace UserManager.Test.Endpoints
 {
-    public class PartialUpdateUserEndpointTests : UserEndpointTests<PartialUpdateUserEndpoint>
+    public class PartialUpdateUserEndpointTests : UserEndpointTests<UpdateUserEndpoint>
     {
         [Fact]
         public async Task CannotFind_Failure()

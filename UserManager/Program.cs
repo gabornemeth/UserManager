@@ -5,6 +5,7 @@ using FluentValidation;
 using UserManager.Mappings;
 using UserManager.Mongo;
 using UserManager.Services;
+using UserManager.Validators;
 
 [assembly:InternalsVisibleTo("UserManager.Test")] ;
 
@@ -16,9 +17,14 @@ builder.Services.AddAuthentication().AddJwtBearer(options => options.Audience = 
 builder.Services.AddAuthorization();
 
 // Register our own services
-builder.Services.AddScoped<AbstractValidator<UserManager.Models.User>>();
+builder.Services.AddScoped<AbstractValidator<UserManager.Models.User>>(_ => new UserValidator());
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, MongoUserRepository>();
+builder.Services.AddScoped<IUserRepository>(services =>
+{
+    var config = services.GetService<IConfiguration>();
+    var mapper = services.GetService<IMapper>();
+    return new MongoUserRepository(config["MongoDB:ConnectionString"], config["MongoDB:Database"], mapper);
+});
 var app = builder.Build();
 
 app.SeedData();

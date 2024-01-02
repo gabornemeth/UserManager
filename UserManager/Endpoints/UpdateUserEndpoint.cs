@@ -1,12 +1,13 @@
 ﻿using FastEndpoints;
+using UserManager.Contracts.Dtos;
 using UserManager.Contracts.Requests;
 using UserManager.Models;
 using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    [HttpPut("users/{id}")]
-    public class UpdateUserEndpoint : Endpoint<UpdateUserRequest>
+    [HttpPatch("users/{id}")]
+    public class UpdateUserEndpoint : Endpoint<PartialUpdateUserRequest>
     {
         private readonly UserEndpointServices _services;
 
@@ -15,18 +16,35 @@ namespace UserManager.Endpoints
             _services = new UserEndpointServices(userService, mapper);
         }
 
-        public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)
+        public override async Task HandleAsync(PartialUpdateUserRequest req, CancellationToken ct)
         {
-            var userToUpdate = _services.Mapper.Map<User>(req);
-            var updated = await _services.UserService.Update(userToUpdate);
-            if (updated)
+            var userToPatch = await _services.UserService.Get(req.Id, ct);
+            if (userToPatch == null)
             {
-                await SendOkAsync(ct);
+                await SendNotFoundAsync(ct);
+                return;
             }
-            else
+
+            try
+            {
+                var dtoToPatch = _services.Mapper.Map<UserDto>(userToPatch);
+                req.Update.ApplyTo(dtoToPatch);
+                userToPatch = _services.Mapper.Map<User>(dtoToPatch);
+            }
+            catch
             {
                 await SendErrorsAsync(cancellation: ct);
+                return;
             }
+
+            var result = await _services.UserService.Update(userToPatch, ct);
+            if (result == false)
+            {
+                await SendErrorsAsync(cancellation: ct);
+                return;
+            }
+
+            await SendOkAsync(ct);
         }
     }
 }

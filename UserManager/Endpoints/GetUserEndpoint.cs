@@ -1,5 +1,4 @@
 ﻿using FastEndpoints;
-using Microsoft.AspNetCore.Authorization;
 using UserManager.Contracts.Dtos;
 using UserManager.Contracts.Requests;
 using UserManager.Services;

@@ -3,7 +3,7 @@ using UserManager.Endpoints;
 
 namespace UserManager.Test.Endpoints
 {
-    public class DeleteUserEndpointTests : UserEndpointTests<DeleteUserEndPoint>
+    public class DeleteUserEndpointTests : UserEndpointTests<DeleteUserEndpoint>
     {
         protected override object[] GetEndPointConstructorArguments() => [UserService.Object];
         

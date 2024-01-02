@@ -1,16 +1,15 @@
 ﻿using FastEndpoints;
-using Microsoft.AspNetCore.Authorization;
 using UserManager.Contracts.Requests;
 using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
     [HttpDelete("users/{id}")]
-    public class DeleteUserEndPoint : Endpoint<DeleteUserRequest>
+    public class DeleteUserEndpoint : Endpoint<DeleteUserRequest>
     {
         private readonly IUserService _userService;
-        
-        public DeleteUserEndPoint(IUserService userService)
+
+        public DeleteUserEndpoint(IUserService userService)
         {
             _userService = userService;
         }

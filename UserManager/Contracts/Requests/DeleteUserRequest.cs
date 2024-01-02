@@ -1,6 +1,7 @@
 ﻿namespace UserManager.Contracts.Requests
 {
-    public class DeleteUserRequest : GetUserRequest
+    public class DeleteUserRequest
     {
+        public int Id { get; set; }
     }
 }
