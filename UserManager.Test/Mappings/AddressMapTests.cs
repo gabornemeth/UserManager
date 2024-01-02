@@ -12,7 +12,7 @@ namespace UserManager.Test.Mappings
             var model = Mapper.Map<Address>(dto);
             
             // assert
-            model.GeoLocation.Should().BeNull();
+            model.Geolocation.Should().BeNull();
         }
 
         [Fact]

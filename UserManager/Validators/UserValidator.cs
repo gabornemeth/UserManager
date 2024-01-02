@@ -10,26 +10,26 @@ namespace UserManager.Validators
             RuleFor(user => user.Name).NotNull().NotEmpty();
             RuleFor(user => user.UserName).NotNull().NotEmpty();
             RuleFor(user => user.Email).NotNull().NotEmpty();
-            RuleFor(user => user.Company.Name)
+            RuleFor(user => user.Company!.Name)
                 .NotNull().NotEmpty()
                 .When(user => user.Company != null);
 
-            RuleFor(user => user.Address.City)
+            RuleFor(user => user.Address!.City)
                 .NotNull().NotEmpty()
                 .When(user => user.Address != null);
-            RuleFor(user => user.Address.ZipCode)
+            RuleFor(user => user.Address!.ZipCode)
                 .NotNull().NotEmpty()
                 .When(user => user.Address != null);
-            RuleFor(user => user.Address.Street)
+            RuleFor(user => user.Address!.Street)
                 .NotNull().NotEmpty()
                 .When(user => user.Address != null);
 
-            RuleFor(user => user.Address.GeoLocation.Latitude)
+            RuleFor(user => user.Address!.Geolocation!.Latitude)
                 .NotEmpty()
-                .When(user => user.Address?.GeoLocation != null);
-            RuleFor(user => user.Address.GeoLocation.Longitude)
+                .When(user => user.Address?.Geolocation != null);
+            RuleFor(user => user.Address!.Geolocation!.Longitude)
                 .NotEmpty()
-                .When(user => user.Address?.GeoLocation != null);
+                .When(user => user.Address?.Geolocation != null);
         }
     }
 }

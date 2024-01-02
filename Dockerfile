@@ -3,17 +3,18 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8088
+#EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["UserManager/UserManager.csproj", "UserManager/"]
-RUN dotnet restore "./UserManager/./UserManager.csproj"
 COPY . .
-WORKDIR "/src/UserManager"
-RUN dotnet build "./UserManager.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN pwd
+RUN ls -al
+WORKDIR /src/UserManager
+RUN dotnet restore "UserManager.csproj"
+RUN dotnet build "UserManager.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

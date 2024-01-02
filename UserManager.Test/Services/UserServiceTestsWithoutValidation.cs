@@ -3,26 +3,21 @@ using UserManager.Services;
 
 namespace UserManager.Test.Services
 {
-    public class UserServiceTestsWithoutValidation
+    public class UserServiceTestsWithoutValidation : UserServiceTestsBase
     {
-        private readonly Mock<IUserRepository> _repository;
-        private readonly UserService _userService;
-
-        public UserServiceTestsWithoutValidation()
+        public UserServiceTestsWithoutValidation() : base(null)
         {
-            _repository = new Mock<IUserRepository>();
-            _userService = new UserService(_repository.Object, null);
         }
 
         [Fact]
-        public async Task CreateAlreadyExistingUser_NotSucceed()
+        public async Task CreateAlreadyExistingUser_Failure()
         {
             // arrange
-            _repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
+            Repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User { Id = 8 });
 
             // act
-            var result = await _userService.Create(new User { Id = 8 });
+            var result = await UserService.Create(new User { Id = 8 });
 
             // assert
             result.Should().BeFalse();
@@ -32,22 +27,22 @@ namespace UserManager.Test.Services
         public async Task CreateNewUser_Succeess()
         {
             // arrange
-            _repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
+            Repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User { Id = 8 });
 
             // act
-            var result = await _userService.Create(new User { Id = 9 });
+            var result = await UserService.Create(new User { Id = 9 });
 
             // assert
             result.Should().BeTrue();
-            _repository.Verify(r => r.Create(It.Is<User>(usr => usr.Id == 9), It.IsAny<CancellationToken>()), Times.Once());
+            Repository.Verify(r => r.Create(It.Is<User>(usr => usr.Id == 9), It.IsAny<CancellationToken>()), Times.Once());
         }
 
         [Fact]
         public async Task DeleteNonExistingUser_Failure()
         {
             // act
-            var result = await _userService.Delete(8);
+            var result = await UserService.Delete(8);
 
             // assert
             result.Should().BeFalse();
@@ -58,28 +53,28 @@ namespace UserManager.Test.Services
         public async Task DeleteExistingUser_Success()
         {
             // arrange
-            _repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
+            Repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User { Id = 8 });
-            _repository.Setup(repo => repo.Delete(It.Is<User>(usr => usr.Id == 8), It.IsAny<CancellationToken>()))
+            Repository.Setup(repo => repo.Delete(It.Is<User>(usr => usr.Id == 8), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(true);
 
             // act
-            var result = await _userService.Delete(8);
+            var result = await UserService.Delete(8);
 
             // assert
             result.Should().BeTrue();
-            _repository.Verify(r => r.Delete(It.Is<User>(usr => usr.Id == 8), It.IsAny<CancellationToken>()), Times.Once());
+            Repository.Verify(r => r.Delete(It.Is<User>(usr => usr.Id == 8), It.IsAny<CancellationToken>()), Times.Once());
         }
 
         [Fact]
         public async Task UpdateNonExistingUser_Failure()
         {
             // arrange
-            _repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
+            Repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
                 .ReturnsAsync((User?)null);
 
             // act
-            var result = await _userService.Update(new User { Id = 8 });
+            var result = await UserService.Update(new User { Id = 8 });
 
             // assert
             result.Should().BeFalse();
@@ -89,22 +84,22 @@ namespace UserManager.Test.Services
         public async Task UpdateExistingUser_Success()
         {
             // arrange
-            _repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
+            Repository.Setup(repo => repo.Get(8, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User { Id = 8 });
 
             // act
-            var result = await _userService.Update(new User { Id = 8 });
+            var result = await UserService.Update(new User { Id = 8 });
 
             // assert
             result.Should().BeTrue();
-            _repository.Verify(r => r.Update(It.Is<User>(usr => usr.Id == 8), It.IsAny<CancellationToken>()), Times.Once());
+            Repository.Verify(r => r.Update(It.Is<User>(usr => usr.Id == 8), It.IsAny<CancellationToken>()), Times.Once());
         }
 
         [Fact]
         public async Task GetUsers_NoUserExist()
         {
             // act
-            var users = await _userService.GetAll();
+            var users = await UserService.GetAll();
 
             // assert
             users.Should().BeEmpty();
@@ -114,11 +109,11 @@ namespace UserManager.Test.Services
         public async Task GetUsers()
         {
             // arrange
-            _repository.Setup(repo => repo.GetAll(It.IsAny<CancellationToken>()))
+            Repository.Setup(repo => repo.GetAll(It.IsAny<CancellationToken>()))
                 .ReturnsAsync([new User(), new User()]);
 
             // act
-            var users = await _userService.GetAll();
+            var users = await UserService.GetAll();
 
             // assert
             users.Should().HaveCount(2);
@@ -128,7 +123,7 @@ namespace UserManager.Test.Services
         public async Task GetUser_NonExisting()
         {
             // act
-            var user = await _userService.Get(10);
+            var user = await UserService.Get(10);
 
             // assert
             user.Should().BeNull();
@@ -137,10 +132,10 @@ namespace UserManager.Test.Services
         [Fact]
         public async Task GetUser_Existing()
         {
-            _repository.Setup(repo => repo.Get(10, It.IsAny<CancellationToken>()))
+            Repository.Setup(repo => repo.Get(10, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new User { Id = 10, Name = "Test User" });
             // act
-            var user = await _userService.Get(10);
+            var user = await UserService.Get(10);
 
             // assert
             user.Should().NotBeNull();

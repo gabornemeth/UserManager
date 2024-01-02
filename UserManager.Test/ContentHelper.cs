@@ -17,7 +17,7 @@ namespace UserManager.Test
                     City = "New Jersey",
                     ZipCode = "NJ 07307",
                     Street = "Bowers street",
-                    GeoLocation = new Location(40.748004f, -74.050169f)
+                    Geolocation = new Location(40.748004f, -74.050169f)
                 },
                 Company = new Company
                 {

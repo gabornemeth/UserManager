@@ -13,7 +13,7 @@ namespace UserManager.Mappings
         {
             CreateMap<LocationDto, Location>().ReverseMap();
             CreateMap<AddressDto, Address>()
-                .ForMember(a => a.GeoLocation, opt => opt.Condition(a => !a.Geolocation?.IsEmpty() ?? true));
+                .ForMember(a => a.Geolocation, opt => opt.Condition(a => !a.Geolocation?.IsEmpty() ?? true));
             CreateMap<Address, AddressDto>();
 
             CreateMap<CompanyDto, Company>().ReverseMap();

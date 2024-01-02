@@ -6,6 +6,6 @@
         public required string City { get; set; }
         public required string ZipCode { get; set; }
         public string? Suite { get; set; }
-        public Location? GeoLocation { get; set; }
+        public Location? Geolocation { get; set; }
     }
 }

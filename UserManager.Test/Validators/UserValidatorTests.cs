@@ -78,8 +78,8 @@ namespace UserManager.Test.Validators
         [Fact]
         public void EmptyAddressGeoLocation_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.GeoLocation = new Location(0, 16.86f)));
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.GeoLocation = new Location(46.81f, 0)));
+            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.Geolocation = new Location(0, 16.86f)));
+            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.Geolocation = new Location(46.81f, 0)));
         }
 
         private ValidationResult ShouldFail(User user)

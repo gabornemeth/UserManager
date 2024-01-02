@@ -1,9 +1,7 @@
-﻿using AutoMapper;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using System.Linq.Expressions;
 using UserManager.Models;
 using UserManager.Services;
-using YamlDotNet.Serialization.NodeTypeResolvers;
 
 namespace UserManager.Mongo
 {
@@ -78,7 +76,7 @@ namespace UserManager.Mongo
             return result.DeletedCount == 1;
         }
 
-        public async Task Update(User user, CancellationToken cancellation = default)
+        public async Task<bool> Update(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
             var update = Builders<User>.Update
@@ -90,7 +88,8 @@ namespace UserManager.Mongo
                 .Set(u => u.Address, user.Address)
                 .Set(u => u.Company, user.Company);
 
-            await usersCollection.UpdateOneAsync(GetFilter(user), update);
+            var result = await usersCollection.UpdateOneAsync(GetFilter(user), update);
+            return result.ModifiedCount == 1;
         }
 
         public async Task Create(User user, CancellationToken cancellation = default)

@@ -41,20 +41,20 @@ namespace UserManager.Services
             return Task.FromResult(false);
         }
 
-        public Task Update(User user, CancellationToken cancellation = default)
+        public Task<bool> Update(User user, CancellationToken cancellation = default)
         {
             var userToUpdate = GetUserById(user.Id);
             if (userToUpdate == null)
             {
                 // error
+                return Task.FromResult(false);
             }
             else
             {
                 _users.Remove(userToUpdate);
                 _users.Add(user);
+                return Task.FromResult(true);
             }
-
-            return Task.CompletedTask;
         }
 
         private User? GetUserById(int id) => _users?.FirstOrDefault(u => u.Id == id);

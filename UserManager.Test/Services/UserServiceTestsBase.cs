@@ -9,7 +9,7 @@ namespace UserManager.Test.Services
         protected Mock<IUserRepository> Repository { get; }
         protected UserService UserService { get; }
 
-        public UserServiceTestsBase(AbstractValidator<User> validator)
+        public UserServiceTestsBase(AbstractValidator<User>? validator = null)
         {
             Repository = new Mock<IUserRepository>();
             UserService = new UserService(Repository.Object, validator);

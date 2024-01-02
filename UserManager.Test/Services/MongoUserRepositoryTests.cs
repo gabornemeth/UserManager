@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ICSharpCode.SharpZipLib.Zip;
 using MongoDB.Driver;
 using Testcontainers.MongoDb;
 using UserManager.Mappings;
@@ -44,35 +43,35 @@ namespace UserManager.Test.Services
         }
 
         [Fact]
-        public async Task VerifyInitialDataSet()
+        public async Task VerifyInitialData()
         {
             var allUsers = await _repository.GetAll();
             var userToGet = allUsers.FirstOrDefault(u => u.Name == "Patricia Lebsack");
             userToGet.Should().NotBeNull();
 
             var user = await _repository.Get(userToGet!.Id);
-            user.Should().NotBeNull();
+            Assert.NotNull(user);
 
-            user!.Name.Should().Be("Patricia Lebsack");
-            user!.UserName.Should().Be("Karianne");
-            user!.Email.Should().Be("Julianne.OConner@kory.org");
-            user!.Phone.Should().Be("493-170-9623 x156");
-            user!.Website.Should().Be("kale.biz");
+            user.Name.Should().Be("Patricia Lebsack");
+            user.UserName.Should().Be("Karianne");
+            user.Email.Should().Be("Julianne.OConner@kory.org");
+            user.Phone.Should().Be("493-170-9623 x156");
+            user.Website.Should().Be("kale.biz");
 
-            user!.Address.Should().NotBeNull();
-            user.Address!.Street.Should().Be("Hoeger Mall");
-            user.Address!.Suite.Should().Be("Apt. 692");
-            user.Address!.City.Should().Be("South Elvis");
-            user.Address!.ZipCode.Should().Be("53919-4257");
+            Assert.NotNull(user.Address);
+            user.Address.Street.Should().Be("Hoeger Mall");
+            user.Address.Suite.Should().Be("Apt. 692");
+            user.Address.City.Should().Be("South Elvis");
+            user.Address.ZipCode.Should().Be("53919-4257");
 
-            user.Address!.GeoLocation.Should().NotBeNull();
-            user.Address.GeoLocation!.Latitude.Should().Be(29.4572f);
-            user.Address.GeoLocation!.Longitude.Should().Be(-164.2990f);
+            Assert.NotNull(user.Address.Geolocation);
+            user.Address.Geolocation.Latitude.Should().Be(29.4572f);
+            user.Address.Geolocation.Longitude.Should().Be(-164.2990f);
 
-            user!.Company.Should().NotBeNull();
-            user.Company!.Name.Should().Be("Robel-Corkery");
-            user.Company!.CatchPhrase.Should().Be("Multi-tiered zero tolerance productivity");
-            user.Company!.BusinessServices.Should().Be("transition cutting-edge web services");
+            Assert.NotNull(user.Company);
+            user.Company.Name.Should().Be("Robel-Corkery");
+            user.Company.CatchPhrase.Should().Be("Multi-tiered zero tolerance productivity");
+            user.Company.BusinessServices.Should().Be("transition cutting-edge web services");
         }
 
         [Fact]
@@ -86,9 +85,9 @@ namespace UserManager.Test.Services
             await _repository.Create(user);
 
             var userCreated = await _repository.Get(user.Id);
-            userCreated.Should().NotBeNull();
-            userCreated!.Name.Should().Be(user.Name);
-            userCreated!.UserName.Should().Be(user.UserName);
+            Assert.NotNull(userCreated);
+            userCreated.Name.Should().Be(user.Name);
+            userCreated.UserName.Should().Be(user.UserName);
         }
 
         [Fact]
@@ -113,5 +112,43 @@ namespace UserManager.Test.Services
             var deleteResult = await _repository.Delete(userToDelete!);
             deleteResult.Should().BeFalse();
         }
+
+        [Fact]
+        public async Task Update()
+        {
+            // arrange
+            var users = await _repository.GetAll();
+            var userToUpdate = users.FirstOrDefault(u => u.Name == "Leanne Graham");
+            Assert.NotNull(userToUpdate);
+
+            // act
+            userToUpdate.UserName = $"{userToUpdate.UserName}.updated";
+            var updateResult = await _repository.Update(userToUpdate);
+
+            // assert
+            updateResult.Should().BeTrue();
+            users = await _repository.GetAll();
+            var userUpdated = users.FirstOrDefault(u => u.Name == "Leanne Graham");
+            Assert.NotNull(userUpdated);
+            userUpdated.UserName.Should().Be(userToUpdate.UserName);
+        }
+
+        [Fact]
+        public async Task UpdateNonExisting()
+        {
+            // arrange
+            var userToUpdate = new User { Name = "Non existing user" };
+
+            // act
+            userToUpdate.UserName = $"{userToUpdate.UserName}.updated";
+            var updateResult = await _repository.Update(userToUpdate!);
+
+            // assert
+            updateResult.Should().BeFalse();
+            var users = await _repository.GetAll();
+            var userUpdated = users.FirstOrDefault(u => u.Name == "Non existing user");
+            Assert.Null(userUpdated);
+        }
+
     }
 }
