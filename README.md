@@ -1,3 +1,5 @@
+[![Build Status](https://nrglabz.visualstudio.com/UserManager/_apis/build/status%2Fgabornemeth.UserManager?branchName=main)](https://nrglabz.visualstudio.com/UserManager/_build/latest?definitionId=20&branchName=main)
+
 # UserManager
 
 Sample ASP.NET Web API for manipulating user entities.
