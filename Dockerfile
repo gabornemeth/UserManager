@@ -3,15 +3,15 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8088
-#EXPOSE 8081
+EXPOSE 8080
+EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY . .
-RUN pwd
-RUN ls -al
+#RUN pwd
+#RUN ls -al
 WORKDIR /src/UserManager
 RUN dotnet restore "UserManager.csproj"
 RUN dotnet build "UserManager.csproj" -c $BUILD_CONFIGURATION -o /app/build
@@ -23,4 +23,5 @@ RUN dotnet publish "./UserManager.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "UserManager.dll"]
+RUN dotnet dev-certs https --trust
+ENTRYPOINT ["dotnet", "UserManager.dll", "-d"]

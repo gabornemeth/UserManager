@@ -10,7 +10,7 @@ Instead of using the traditional controller based approach, went with the Minima
 
 Address and company entities are handled as attached ones of the user and not standalone ones.
 
-Further improvements
+### Further improvements
 - constraints in the database
 - separate layer of objects for the database models
 - validation logic could be more centralized and enhanced

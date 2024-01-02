@@ -23,7 +23,7 @@ builder.Services.AddScoped<IUserRepository>(services =>
 {
     var config = services.GetService<IConfiguration>();
     var mapper = services.GetService<IMapper>();
-    return new MongoUserRepository(config["MongoDB:ConnectionString"], config["MongoDB:Database"], mapper);
+    return new MongoUserRepository(config["USERMANAGER_MONGODB_CONNECTIONSTRING"], config["USERMANAGER_MONGODB_DATABASE"], mapper);
 });
 var app = builder.Build();
 
