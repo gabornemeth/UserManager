@@ -18,3 +18,4 @@ steps:
   displayName: 'Building ASP.NET Web API'
 - script: dotnet test $(solution)
   displayName: 'Running tests'
+- script: docker build . --no-cache
