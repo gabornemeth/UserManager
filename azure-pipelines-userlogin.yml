@@ -11,11 +11,10 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  solution: "UserManager.sln"
+  solution: "UserLogin/UserLogin.sln"
 
 steps:
 - script: dotnet build --configuration $(buildConfiguration) $(solution)
-  displayName: 'Building ASP.NET Web API'
-- script: dotnet test $(solution)
-  displayName: 'Running tests'
-- script: docker build . --no-cache
+  displayName: 'Building UserLogin web app'
+- script: dotnet publish $(solution)
+  displayName: 'Publishing web app'
