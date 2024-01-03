@@ -1,4 +1,5 @@
-[![Build Status](https://nrglabz.visualstudio.com/UserManager/_apis/build/status%2Fgabornemeth.UserManager?branchName=main)](https://nrglabz.visualstudio.com/UserManager/_build/latest?definitionId=20&branchName=main)
+[![Build Status](https://nrglabz.visualstudio.com/UserManager/_apis/build/status%2FUserManager%20API?branchName=main)](https://nrglabz.visualstudio.com/UserManager/_build/latest?definitionId=20&branchName=main)
+[![Build Status](https://nrglabz.visualstudio.com/UserManager/_apis/build/status%2FTokenGrabber%20webapp?branchName=main)](https://nrglabz.visualstudio.com/UserManager/_build/latest?definitionId=21&branchName=main)
 
 # UserManager
 
