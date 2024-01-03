@@ -18,3 +18,10 @@ steps:
   displayName: 'Building UserLogin web app'
 - script: dotnet publish $(solution)
   displayName: 'Publishing web app'
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Pay-As-You-Go(bfff0a0e-6db8-404d-a93d-690050111dfc)'
+    appType: 'webAppLinux'
+    appName: 'TokenGrabber'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    startUpCommand: 'dotnet TokenGrabber.dll'
