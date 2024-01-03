@@ -16,7 +16,7 @@ namespace UserManager.Endpoints
         public override void Configure()
         {
             Delete("users/{id}");
-            Permissions(Scopes.Write);
+            Policy(p => p.HasScope(Scopes.Write));
         }
 
         public override async Task HandleAsync(DeleteUserRequest req, CancellationToken ct)

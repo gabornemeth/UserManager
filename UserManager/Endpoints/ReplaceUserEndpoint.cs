@@ -17,7 +17,7 @@ namespace UserManager.Endpoints
         public override void Configure()
         {
             Put("users/{id}");
-            Permissions(Scopes.Write);
+            Policy(p => p.HasScope(Scopes.Write));
         }
 
         public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)

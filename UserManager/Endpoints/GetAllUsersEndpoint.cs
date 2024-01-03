@@ -1,5 +1,4 @@
 ﻿using FastEndpoints;
-using System.Runtime.CompilerServices;
 using UserManager.Contracts.Dtos;
 using UserManager.Contracts.Requests;
 using UserManager.Contracts.Responses;
@@ -19,7 +18,7 @@ namespace UserManager.Endpoints
         public override void Configure()
         {
             Get("users");
-            Permissions(Scopes.Read);
+            Policy(p => p.HasScope(Scopes.Read));
         }
 
         public override async Task HandleAsync(GetAllUsersRequest req, CancellationToken ct)

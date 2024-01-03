@@ -3,7 +3,7 @@ using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
+using UserManager;
 using UserManager.Mappings;
 using UserManager.Mongo;
 using UserManager.Services;
@@ -22,8 +22,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.Authority = builder.Configuration["JwtAuthority"];
-    options.Audience = builder.Configuration["JwtAudience"];
+    options.Authority = builder.Configuration["JwtBearer:Authority"];
+    options.Audience = builder.Configuration["JwtBearer:Audience"];
 });
 builder.Services.AddAuthorization();
 
@@ -32,9 +32,9 @@ builder.Services.AddScoped<AbstractValidator<UserManager.Models.User>>(_ => new 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository>(services =>
 {
-    var mapper = services.GetService<IMapper>() ?? throw new ArgumentException($"Could not find {nameof(IMapper)} dependency registration");
-    var connectionString = builder.Configuration["USERMANAGER_MONGODB_CONNECTIONSTRING"] ?? throw new ArgumentException("USERMANAGER_MONGODB_CONNECTIONSTRING");
-    var database = builder.Configuration["USERMANAGER_MONGODB_DATABASE"] ?? throw new ArgumentException("USERMANAGER_MONGODB_DATABASE");
+    var mapper = services.GetService<IMapper>() ?? throw new ArgumentException($"Could not find {nameof(IMapper)} dependency registration.");
+    var connectionString = builder.Configuration["MongoDB:ConnectionString"] ?? throw new ArgumentException("'MongoDB:ConnectionString' is not configured.");
+    var database = builder.Configuration["MongoDB:Database"] ?? throw new ArgumentException("'MongoDB:Database' is not configured.");
     return new MongoUserRepository(connectionString, database, mapper);
 });
 var app = builder.Build();

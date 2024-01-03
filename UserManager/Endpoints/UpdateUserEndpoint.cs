@@ -18,7 +18,7 @@ namespace UserManager.Endpoints
         public override void Configure()
         {
             Patch("users/{id}");
-            Permissions(Scopes.Write);
+            Policy(p => p.HasScope(Scopes.Write));
         }
 
         public override async Task HandleAsync(PartialUpdateUserRequest req, CancellationToken ct)

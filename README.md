@@ -10,6 +10,8 @@ Instead of using the traditional controller based approach, went with the Minima
 
 Address and company entities are handled as attached ones of the user and not standalone ones.
 
+No separate delete permission, because with the write scope it's still possible to erase the user data.
+
 ### Known issues, shortcomings, areas to improve
 - Enhance JSON parsing in order to be able to enforce non nullable properties all the way (`User.Name`, `Address.City`, etc.)
 - Add tests for specific validation errors, not just checking bad requests (if we want to give hints to the client about what was wrong).
