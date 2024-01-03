@@ -16,12 +16,12 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration) $(solution)
   displayName: 'Building web app'
-- script: dotnet publish $(solution)
+- script: dotnet publish $(solution) -o publish
   displayName: 'Publishing web app'
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Pay-As-You-Go(bfff0a0e-6db8-404d-a93d-690050111dfc)'
     appType: 'webAppLinux'
     appName: 'TokenGrabber'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    package: '$(System.DefaultWorkingDirectory)/publish'
     startUpCommand: 'dotnet TokenGrabber.dll'
