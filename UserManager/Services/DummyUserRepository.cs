@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MongoDB.Bson;
 using UserManager.Models;
 
 namespace UserManager.Services
@@ -24,7 +25,7 @@ namespace UserManager.Services
             return Task.FromResult<IEnumerable<User>>(_users);
         }
 
-        public Task<User?> Get(int id, CancellationToken cancellation = default)
+        public Task<User?> Get(string id, CancellationToken cancellation = default)
         {
             return Task.FromResult(GetUserById(id));
         }
@@ -57,7 +58,7 @@ namespace UserManager.Services
             }
         }
 
-        private User? GetUserById(int id) => _users?.FirstOrDefault(u => u.Id == id);
+        private User? GetUserById(string? id) => _users?.FirstOrDefault(u => id == u.Id);
 
         public void Seed()
         {

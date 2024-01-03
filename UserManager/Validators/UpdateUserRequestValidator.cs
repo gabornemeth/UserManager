@@ -3,7 +3,7 @@ using UserManager.Contracts.Requests;
 
 namespace UserManager.Validators
 {
-    public class UpdateUserRequestValidator : UserDtoValidatorBase<UpdateUserRequest>
+    public class UpdateUserRequestValidator : UserDtoValidatorBase<ReplaceUserRequest>
     {
         public UpdateUserRequestValidator()
         {

@@ -8,7 +8,7 @@ namespace UserManager.Test
         {
             var user = new User
             {
-                Id = 1,
+                Id = "1",
                 Name = "John Doe",
                 UserName = "john.doe",
                 Email = "john.doe@mycompany.net",

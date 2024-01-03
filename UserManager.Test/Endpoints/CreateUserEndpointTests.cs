@@ -16,7 +16,7 @@ namespace UserManager.Test.Endpoints
             UserService.Setup(srv => srv.Create(It.IsAny<User>(), It.IsAny<CancellationToken>()))
                 .Returns<User, CancellationToken>((user, cancellation) =>
                 {
-                    user.Id = 11;
+                    user.Id = "11";
                     return Task.FromResult(true);
                 });
 

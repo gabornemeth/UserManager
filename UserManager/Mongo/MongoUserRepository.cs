@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System.Linq.Expressions;
 using UserManager.Models;
 using UserManager.Services;
@@ -26,10 +27,10 @@ namespace UserManager.Mongo
             return users;
         }
 
-        public async Task<User?> Get(int id, CancellationToken cancellation = default)
+        public async Task<User?> Get(string id, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
-            var user = await usersCollection.Find(u => u.Id == id).FirstOrDefaultAsync(cancellation);
+            var user = await usersCollection.Find(u => u.Id.ToString() == id).FirstOrDefaultAsync(cancellation);
             return user;
         }
 
@@ -46,7 +47,7 @@ namespace UserManager.Mongo
                     var usersToAdd = SampleData.GetUsers().Select(u =>
                     {
                         var user = _mapper.Map<User>(u);
-                        user.Id = GetNextId(usersCollection);
+                        BeforeInsert(user);
                         return user;
                     });
 
@@ -95,29 +96,15 @@ namespace UserManager.Mongo
         public async Task Create(User user, CancellationToken cancellation = default)
         {
             var usersCollection = GetUsersCollection();
-            user.Id = GetNextId(usersCollection);
+            BeforeInsert(user);
             await usersCollection.InsertOneAsync(user);
         }
 
-        private Expression<Func<User, bool>> GetFilter(User user) => u => u.Id == user.Id;
-
-        private int _nextId = 0;
-
-        private int GetNextId(IMongoCollection<User> users)
+        private void BeforeInsert(User user)
         {
-            if (_nextId == 0)
-            {
-                try
-                {
-                    _nextId = users.Find(_ => true).ToEnumerable().Max(u => u.Id) + 1;
-                }
-                catch
-                {
-                    _nextId = 1; // collection was empty
-                }
-            }
-
-            return _nextId++;
+            user.Id = null;
         }
+
+        private Expression<Func<User, bool>> GetFilter(User user) => u => u.Id == user.Id;
     }
 }

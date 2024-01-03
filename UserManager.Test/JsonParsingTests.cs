@@ -173,7 +173,7 @@ namespace UserManager.Test
 
         private UserDto ApplyPatch(UserDto user, string jsonPatch)
         {
-            var patch = JsonConvert.DeserializeObject<PartialUpdateUserRequest>(jsonPatch);
+            var patch = JsonConvert.DeserializeObject<UpdateUserRequest>(jsonPatch);
             patch.Should().NotBeNull();
             patch!.Update.ApplyTo(user);
 

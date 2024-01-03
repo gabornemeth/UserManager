@@ -44,7 +44,7 @@ namespace UserManager.Test.Endpoints
             // setup
             var users = Enumerable.Range(1, 100).Select(idx => new User
             {
-                Id = idx,
+                Id = idx.ToString(),
                 Name = $"User {idx}",
                 UserName = $"user.{idx}"
             });
@@ -66,7 +66,7 @@ namespace UserManager.Test.Endpoints
             // setup
             var users = Enumerable.Range(1, 100).Select(idx => new User
             {
-                Id = idx,
+                Id = idx.ToString(),
                 Name = $"User {idx}",
                 UserName = $"user.{idx}"
             });
@@ -88,7 +88,7 @@ namespace UserManager.Test.Endpoints
             // setup
             var users = Enumerable.Range(1, 100).Select(idx => new User
             {
-                Id = idx,
+                Id = idx.ToString(),
                 Name = $"User {idx}",
                 UserName = $"user.{idx}"
             });

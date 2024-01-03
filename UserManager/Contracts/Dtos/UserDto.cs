@@ -5,7 +5,7 @@ namespace UserManager.Contracts.Dtos
 {
     public class UserDto : UserDtoWithoutIdentifier
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 
     public class UserDtoWithoutIdentifier

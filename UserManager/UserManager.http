@@ -1,5 +1,5 @@
 @UserManager_HostAddress = https://localhost:7298/api/v1
-@JWT_Bearer = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImdhYm9yIiwic3ViIjoiZ2Fib3IiLCJqdGkiOiJmZmZlZWNjMCIsImF1ZCI6InVzZXJtYW5hZ2VyLWFwaSIsIm5iZiI6MTcwMzY4NDQxMiwiZXhwIjoxNzExNTQ2ODEyLCJpYXQiOjE3MDM2ODQ0MTIsImlzcyI6ImRvdG5ldC11c2VyLWp3dHMifQ.-CMSMBXIWhQpudCsWUeqz3bcbid29XsLHyzqu5MqhIw
+@JWT_Bearer = 
 
 ### Get all users
 GET {{UserManager_HostAddress}}/users

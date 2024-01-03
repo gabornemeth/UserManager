@@ -5,7 +5,7 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    public class ReplaceUserEndpoint : Endpoint<UpdateUserRequest>
+    public class ReplaceUserEndpoint : Endpoint<ReplaceUserRequest>
     {
         private readonly UserEndpointServices _services;
 
@@ -20,7 +20,7 @@ namespace UserManager.Endpoints
             Policy(p => p.HasScope(Scopes.Write));
         }
 
-        public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)
+        public override async Task HandleAsync(ReplaceUserRequest req, CancellationToken ct)
         {
             var userToUpdate = _services.Mapper.Map<User>(req);
             var updated = await _services.UserService.Update(userToUpdate);

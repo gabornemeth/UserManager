@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MongoDB.Bson;
 using UserManager.Models;
 
 namespace UserManager.Services
@@ -16,9 +17,9 @@ namespace UserManager.Services
 
         public async Task<bool> Create(User user, CancellationToken cancellationToken = default)
         {
-            if (user.Id != 0)
+            if (user.Id != null)
             {
-                var existingUser = await _repository.Get(user.Id, cancellationToken);
+                var existingUser = await _repository.Get(user.Id.ToString()!, cancellationToken);
                 if (existingUser != null)
                 {
                     return false;
@@ -34,7 +35,7 @@ namespace UserManager.Services
             return true;
         }
 
-        public async Task<bool> Delete(int id, CancellationToken cancellationToken = default)
+        public async Task<bool> Delete(string id, CancellationToken cancellationToken = default)
         {
             var user = await _repository.Get(id, cancellationToken);
             if (user == null)
@@ -50,14 +51,15 @@ namespace UserManager.Services
             return _repository.GetAll(cancellation);
         }
 
-        public Task<User?> Get(int id, CancellationToken cancellationToken = default)
+        public Task<User?> Get(string id, CancellationToken cancellationToken = default)
         {
             return _repository.Get(id, cancellationToken);
         }
 
         public async Task<bool> Update(User user, CancellationToken cancellationToken = default)
         {
-            var userToUpdate = await _repository.Get(user.Id);
+            if (user.Id == null) return false;
+            var userToUpdate = await _repository.Get(user.Id.ToString()!);
             if (userToUpdate == null)
             {
                 return false;

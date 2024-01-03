@@ -6,7 +6,7 @@ using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    public class UpdateUserEndpoint : Endpoint<PartialUpdateUserRequest>
+    public class UpdateUserEndpoint : Endpoint<UpdateUserRequest>
     {
         private readonly UserEndpointServices _services;
 
@@ -21,7 +21,7 @@ namespace UserManager.Endpoints
             Policy(p => p.HasScope(Scopes.Write));
         }
 
-        public override async Task HandleAsync(PartialUpdateUserRequest req, CancellationToken ct)
+        public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)
         {
             var userToPatch = await _services.UserService.Get(req.Id, ct);
             if (userToPatch == null)

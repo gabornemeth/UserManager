@@ -35,7 +35,7 @@ namespace UserManager.Endpoints.Summary
                     ]
                 }
                 """;
-            ExampleRequest = JsonConvert.DeserializeObject<PartialUpdateUserRequest>(jsonRequest);
+            ExampleRequest = JsonConvert.DeserializeObject<UpdateUserRequest>(jsonRequest);
             Response(StatusCodes.Status200OK, "User has been updated.");
             Response(StatusCodes.Status404NotFound, "The specified user has not been found.");
             Response(StatusCodes.Status400BadRequest, "Invalid modification request.");
