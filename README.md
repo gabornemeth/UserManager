@@ -12,7 +12,10 @@ Address and company entities are handled as attached ones of the user and not st
 
 ### Known issues, shortcomings, areas to improve
 - Enhance JSON parsing in order to be able to enforce non nullable properties all the way (`User.Name`, `Address.City`, etc.)
+- Add tests for specific validation errors, not just checking bad requests (if we want to give hints to the client about what was wrong).
+- Add more integration tests for the endpoints (having the underlying architecture in place)
+- Add telemetry, logging
 - Enhance database (add constraints, add sequence to be able to use auto-increment numbers as identifier)
-- Separate layer of objects for the database models
+- Separate layer of objects for the database models (that would be the clean architecture on paper, but as we can work with this structure equally well as the main models inside the app, we can skip this step in a pragmatic way)
 - Validation logic could be more centralized and enhanced
 - Fine tune the Swagger documentation (serialization of objects into JSON)
