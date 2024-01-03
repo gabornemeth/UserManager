@@ -32,9 +32,10 @@ builder.Services.AddScoped<AbstractValidator<UserManager.Models.User>>(_ => new 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository>(services =>
 {
-    var mapper = services.GetService<IMapper>();
-    return new MongoUserRepository(builder.Configuration["USERMANAGER_MONGODB_CONNECTIONSTRING"],
-        builder.Configuration["USERMANAGER_MONGODB_DATABASE"], mapper);
+    var mapper = services.GetService<IMapper>() ?? throw new ArgumentException($"Could not find {nameof(IMapper)} dependency registration");
+    var connectionString = builder.Configuration["USERMANAGER_MONGODB_CONNECTIONSTRING"] ?? throw new ArgumentException("USERMANAGER_MONGODB_CONNECTIONSTRING");
+    var database = builder.Configuration["USERMANAGER_MONGODB_DATABASE"] ?? throw new ArgumentException("USERMANAGER_MONGODB_DATABASE");
+    return new MongoUserRepository(connectionString, database, mapper);
 });
 var app = builder.Build();
 

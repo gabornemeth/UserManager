@@ -1,11 +1,13 @@
 ﻿using FastEndpoints;
+using System.Runtime.CompilerServices;
 using UserManager.Contracts.Dtos;
+using UserManager.Contracts.Requests;
 using UserManager.Contracts.Responses;
 using UserManager.Services;
 
 namespace UserManager.Endpoints
 {
-    public class GetAllUsersEndpoint : EndpointWithoutRequest<GetAllUsersResponse>
+    public class GetAllUsersEndpoint : Endpoint<GetAllUsersRequest, GetAllUsersResponse>
     {
         private readonly UserEndpointServices _services;
 
@@ -20,9 +22,10 @@ namespace UserManager.Endpoints
             Permissions(Scopes.Read);
         }
 
-        public override async Task HandleAsync(CancellationToken ct)
+        public override async Task HandleAsync(GetAllUsersRequest req, CancellationToken ct)
         {
-            var users = await _services.UserService.GetAll(ct);
+            var allUsers = await _services.UserService.GetAll(ct);
+            var users = allUsers.Skip((req.Page - 1) * req.PerPage).Take(req.PerPage);
             var mappedUsers = _services.Mapper.Map<IEnumerable<UserDto>>(users);
             await SendOkAsync(new GetAllUsersResponse(mappedUsers), cancellation: ct);
         }

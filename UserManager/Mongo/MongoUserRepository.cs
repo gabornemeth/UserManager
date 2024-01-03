@@ -53,7 +53,7 @@ namespace UserManager.Mongo
                     usersCollection.InsertMany(usersToAdd);
                 }
             }
-            catch (Exception ex)
+            catch
             {
             }
         }
