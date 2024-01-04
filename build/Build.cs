@@ -57,7 +57,7 @@ class Build : NukeBuild
     });
 
     Target Test => _ => _
-        //.DependsOn(Compile)
+        .DependsOn(Compile)
         .Executes(() =>
         {
             CoverageDirectory.CreateOrCleanDirectory();
@@ -70,8 +70,8 @@ class Build : NukeBuild
                 .AddExclude("[*]Program") // entry point
                 .AddExclude("[*]*Summary") // Endpoints documentation
                 //.SetThreshold(80)
-                .SetOutput(CoverageDirectory / "opencover.xml")
-                .SetFormat(CoverletOutputFormat.opencover));
+                .SetOutput(CoverageDirectory / "cobertura.xml")
+                .SetFormat(CoverletOutputFormat.cobertura));
         });
 
     Target Report => _ => _
@@ -84,6 +84,6 @@ class Build : NukeBuild
                     .SetTargetDirectory(CoverageReportDirectory)
                     .SetFramework("net6.0")
                     .SetReportTypes(new ReportTypes[] { ReportTypes.Html })
-                    .SetReports(CoverageDirectory / "opencover.xml"));
+                    .SetReports(CoverageDirectory / "cobertura.xml"));
         });
 }

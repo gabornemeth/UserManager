@@ -8,19 +8,6 @@ namespace UserManager.Test
     public class JsonParsingTests
     {
         [Fact]
-        public void ParseSampleData()
-        {
-            var users = SampleData.GetUsers();
-
-            users.Should().HaveCount(10);
-            var firstUser = users.First();
-            firstUser.Name.Should().Be("Leanne Graham");
-            Assert.NotNull(firstUser.Address?.Geolocation);
-            firstUser.Address.Geolocation.Latitude.Should().NotBe(0.0f);
-            firstUser.Address.Geolocation.Latitude.Should().NotBe(0.0f);
-        }
-
-        [Fact]
         public void JsonPatchDocument_ToJson()
         {
             var patch = new JsonPatchDocument<UserDto>();

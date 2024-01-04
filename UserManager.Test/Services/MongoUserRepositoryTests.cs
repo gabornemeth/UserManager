@@ -38,7 +38,7 @@ namespace UserManager.Test.Services
         public MongoUserRepositoryTests(DbFixture fixture)
         {
             _fixture = fixture;
-            var mapper = new MapperConfiguration(config => config.AddProfile<UserProfile>()).CreateMapper();
+            var mapper = TestHelper.CreateMapper();
             _repository = new MongoUserRepository(_fixture.GetConnectionString(), "users", mapper);
             _repository.Seed();
         }

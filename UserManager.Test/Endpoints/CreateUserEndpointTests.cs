@@ -11,6 +11,12 @@ namespace UserManager.Test.Endpoints
     public class CreateUserEndpointTests : UserEndpointTests<CreateUserEndpoint>
     {
         [Fact]
+        public void UseHttpPost() => ShouldUseHttpPost();
+
+        [Fact]
+        public void DoesNotAllowAnonymousAccess() => ShouldAllowAnonymous(false);
+
+        [Fact]
         public async Task CreateNewUser_Success()
         {
             UserService.Setup(srv => srv.Create(It.IsAny<User>(), It.IsAny<CancellationToken>()))

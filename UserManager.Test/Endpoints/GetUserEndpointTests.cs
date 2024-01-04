@@ -7,6 +7,12 @@ namespace UserManager.Test.Endpoints
     public class GetUserEndpointTests : UserEndpointTests<GetUserEndpoint>
     {
         [Fact]
+        public void UseHttpGet() => ShouldUseHttpGet();
+
+        [Fact]
+        public void DoesNotAllowAnonymousAccess() => ShouldAllowAnonymous(false);
+
+        [Fact]
         public async Task GetNonExistingUser_Failure()
         {
             // arrange

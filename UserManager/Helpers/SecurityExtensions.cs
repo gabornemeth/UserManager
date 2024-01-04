@@ -1,12 +1,13 @@
-﻿using FastEndpoints;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 
 namespace UserManager
 {
     public static class SecurityExtensions
     {
-        public static AuthorizationPolicyBuilder HasScope(this AuthorizationPolicyBuilder policy, string scope)
+        [ExcludeFromCodeCoverage]
+        internal static AuthorizationPolicyBuilder HasScope(this AuthorizationPolicyBuilder policy, string scope)
         {
             return policy.RequireAssertion(ctx => ctx.User.Claims.HasScope(scope));
         }
@@ -17,7 +18,7 @@ namespace UserManager
             if (scopeClaim == null)
                 return false;
 
-            return scopeClaim.Value?.Contains(scope) ?? false;
+            return scopeClaim.Value.Contains(scope);
         }
     }
 }

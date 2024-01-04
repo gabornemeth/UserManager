@@ -9,7 +9,7 @@ namespace UserManager.Test.Validators
         [Fact]
         public void ValidUser_Success()
         {
-            var result = Validate(ContentHelper.GetValidUser());
+            var result = Validate(TestHelper.GetValidUser());
             result.IsValid.Should().BeTrue();
             result.Errors.Should().BeEmpty();
         }
@@ -17,69 +17,69 @@ namespace UserManager.Test.Validators
         [Fact]
         public void NullOrEmptyName_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.Name = ""));
-            ShouldFail(ContentHelper.GetValidUser(u => u.Name = null!));
+            ShouldFail(TestHelper.GetValidUser(u => u.Name = ""));
+            ShouldFail(TestHelper.GetValidUser(u => u.Name = null!));
         }
 
         [Fact]
         public void NullOrEmptyUserName_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.UserName = ""));
-            ShouldFail(ContentHelper.GetValidUser(u => u.UserName = null!));
+            ShouldFail(TestHelper.GetValidUser(u => u.UserName = ""));
+            ShouldFail(TestHelper.GetValidUser(u => u.UserName = null!));
         }
 
         [Fact]
         public void NullOrEmptyEmail_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.Email = ""));
-            ShouldFail(ContentHelper.GetValidUser(u => u.Email = null!));
+            ShouldFail(TestHelper.GetValidUser(u => u.Email = ""));
+            ShouldFail(TestHelper.GetValidUser(u => u.Email = null!));
         }
 
         [Fact]
         public void EmptyCompanyName_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.Company!.Name = ""));
-            ShouldFail(ContentHelper.GetValidUser(u => u.Company!.Name = null!));
+            ShouldFail(TestHelper.GetValidUser(u => u.Company!.Name = ""));
+            ShouldFail(TestHelper.GetValidUser(u => u.Company!.Name = null!));
         }
 
         [Fact]
         public void NullCompany_Success()
         {
-            ShouldSucceed(ContentHelper.GetValidUser(u => u.Company = null));
+            ShouldSucceed(TestHelper.GetValidUser(u => u.Company = null));
         }
 
         [Fact]
         public void NullOrEmptyCity_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.City = null!));
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.City = ""));
+            ShouldFail(TestHelper.GetValidUser(u => u.Address!.City = null!));
+            ShouldFail(TestHelper.GetValidUser(u => u.Address!.City = ""));
         }
 
         [Fact]
         public void NullOrEmptyZipCode_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.ZipCode = null!));
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.ZipCode = ""));
+            ShouldFail(TestHelper.GetValidUser(u => u.Address!.ZipCode = null!));
+            ShouldFail(TestHelper.GetValidUser(u => u.Address!.ZipCode = ""));
         }
 
         [Fact]
         public void NullOrEmptyStreet_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.Street = null!));
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.Street = ""));
+            ShouldFail(TestHelper.GetValidUser(u => u.Address!.Street = null!));
+            ShouldFail(TestHelper.GetValidUser(u => u.Address!.Street = ""));
         }
 
         [Fact]
         public void NullAddress_Success()
         {
-            ShouldSucceed(ContentHelper.GetValidUser(u => u.Address = null));
+            ShouldSucceed(TestHelper.GetValidUser(u => u.Address = null));
         }
 
         [Fact]
         public void EmptyAddressGeoLocation_Error()
         {
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.Geolocation = new Location(0, 16.86f)));
-            ShouldFail(ContentHelper.GetValidUser(u => u.Address!.Geolocation = new Location(46.81f, 0)));
+            ShouldFail(TestHelper.GetValidUser(u => u.Address!.Geolocation = new Location(0, 16.86f)));
+            ShouldFail(TestHelper.GetValidUser(u => u.Address!.Geolocation = new Location(46.81f, 0)));
         }
 
         private ValidationResult ShouldFail(User user)

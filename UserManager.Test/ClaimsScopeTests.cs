@@ -45,6 +45,12 @@ namespace UserManager.Test
                     new Claim("exp", "1704390755"),
                     new Claim("scope", $"profile openid {Scopes.Read} {Scopes.Write}")
                 };
+                var emptyScopeClaim = new[] {
+                    new Claim("user", "gabor"),
+                    new Claim("iat", "1704304355"),
+                    new Claim("exp", "1704390755"),
+                    new Claim("scope", "")
+                };
 
                 yield return [false, Scopes.Read, noScopeClaims];
                 yield return [false, Scopes.Write, noScopeClaims];
@@ -56,6 +62,8 @@ namespace UserManager.Test
                 yield return [true, Scopes.Write, scopeClaimWithWritePermission];
                 yield return [true, Scopes.Read, scopeClaimWithReadAndWritePermissions];
                 yield return [true, Scopes.Write, scopeClaimWithReadAndWritePermissions];
+                yield return [false, Scopes.Read, emptyScopeClaim];
+                yield return [false, Scopes.Write, emptyScopeClaim];
             }
         }
 

@@ -11,7 +11,7 @@ namespace UserManager.Mongo
         private readonly IMapper _mapper;
         private readonly MongoClient _client;
         private readonly string _databaseName;
-        
+
         public MongoUserRepository(string connectionString, string databaseName, IMapper mapper)
         {
             _client = new MongoClient(connectionString);
@@ -36,26 +36,20 @@ namespace UserManager.Mongo
 
         public void Seed()
         {
-            try
+            var usersCollection = GetUsersCollection();
+            var count = usersCollection.CountDocuments(_ => true);
+            if (count == 0)
             {
-                var usersCollection = GetUsersCollection();
-                var count = usersCollection.CountDocuments(_ => true);
-                if (count == 0)
+                var db = GetDatabase();
+
+                var usersToAdd = SampleData.GetUsers().Select(u =>
                 {
-                    var db = GetDatabase();
+                    var user = _mapper.Map<User>(u);
+                    BeforeInsert(user);
+                    return user;
+                });
 
-                    var usersToAdd = SampleData.GetUsers().Select(u =>
-                    {
-                        var user = _mapper.Map<User>(u);
-                        BeforeInsert(user);
-                        return user;
-                    });
-
-                    usersCollection.InsertMany(usersToAdd);
-                }
-            }
-            catch
-            {
+                usersCollection.InsertMany(usersToAdd);
             }
         }
 

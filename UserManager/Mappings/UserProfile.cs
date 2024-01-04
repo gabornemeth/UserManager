@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using UserManager.Contracts.Dtos;
+using UserManager.Contracts.Requests;
 using UserManager.Models;
 
 namespace UserManager.Mappings
@@ -24,8 +25,10 @@ namespace UserManager.Mappings
             CreateMap<UserDto, User>()
                 .ForMember(u => u.Company, opt => opt.Condition(u => !u.Company?.IsEmpty() ?? true))
                 .ForMember(u => u.Address, opt => opt.Condition(u => !u.Address?.IsEmpty() ?? true));
-
             CreateMap<User, UserDto>();
+            CreateMap<User, UserDtoBase>();
+            CreateMap<User, CreateUserRequest>();
+            CreateMap<User, ReplaceUserRequest>();
         }
     }
 }

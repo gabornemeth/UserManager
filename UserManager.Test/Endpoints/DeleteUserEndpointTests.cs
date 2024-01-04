@@ -6,7 +6,13 @@ namespace UserManager.Test.Endpoints
     public class DeleteUserEndpointTests : UserEndpointTests<DeleteUserEndpoint>
     {
         protected override object[] GetEndPointConstructorArguments() => [UserService.Object];
-        
+
+        [Fact]
+        public void UseHttpDelete() => ShouldUseHttpDelete();
+
+        [Fact]
+        public void DoesNotAllowAnonymousAccess() => ShouldAllowAnonymous(false);
+
         [Fact]
         public async Task DeleteNonExistingUser_Failure()
         {

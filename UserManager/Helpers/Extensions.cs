@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using UserManager.Contracts.Dtos;
-using UserManager.Services;
+﻿using UserManager.Services;
 
 namespace UserManager.Helpers
 {

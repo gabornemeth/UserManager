@@ -8,6 +8,12 @@ namespace UserManager.Test.Endpoints
     public class GetAllUsersEndpointTests : UserEndpointTests<GetAllUsersEndpoint>
     {
         [Fact]
+        public void UseHttpGet() => ShouldUseHttpGet();
+
+        [Fact]
+        public void DoesNotAllowAnonymousAccess() => ShouldAllowAnonymous(false);
+
+        [Fact]
         public async Task NoUsers()
         {
             // setup

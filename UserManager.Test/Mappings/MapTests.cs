@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using UserManager.Mappings;
-
-namespace UserManager.Test.Mappings
+﻿namespace UserManager.Test.Mappings
 {
     public abstract class MapTests
     {
@@ -9,7 +6,7 @@ namespace UserManager.Test.Mappings
 
         public MapTests()
         {
-            Mapper = new MapperConfiguration(config => config.AddProfile<UserProfile>()).CreateMapper();
+            Mapper = TestHelper.CreateMapper();
         }
     }
 }

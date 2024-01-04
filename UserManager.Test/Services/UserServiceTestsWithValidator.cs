@@ -14,7 +14,7 @@ namespace UserManager.Test.Services
         public async Task CreateInvalidUser_Failure()
         {
             // arrange
-            var invalidUser = ContentHelper.GetValidUser().Invalidate();
+            var invalidUser = TestHelper.GetValidUser().Invalidate();
             Repository.Setup(repo => repo.Get(invalidUser.Id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync((User?)null);
 
@@ -29,7 +29,7 @@ namespace UserManager.Test.Services
         public async Task CreateValidUser_Succeed()
         {
             // arrange
-            var validUser = ContentHelper.GetValidUser();
+            var validUser = TestHelper.GetValidUser();
             Repository.Setup(repo => repo.Get(validUser.Id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync((User?)null);
 
@@ -44,9 +44,22 @@ namespace UserManager.Test.Services
         public async Task UpdateInvalidUser_Failure()
         {
             // arrange
-            var invalidUser = ContentHelper.GetValidUser().Invalidate();
+            var invalidUser = TestHelper.GetValidUser().Invalidate();
             Repository.Setup(repo => repo.Get(invalidUser.Id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(invalidUser);
+
+            // act
+            var result = await UserService.Update(invalidUser);
+
+            // assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task UpdateWithoutId_Failure()
+        {
+            // arrange
+            var invalidUser = TestHelper.GetValidUser(u => u.Id = null);
 
             // act
             var result = await UserService.Update(invalidUser);
@@ -59,7 +72,7 @@ namespace UserManager.Test.Services
         public async Task UpdateValidUser_Success()
         {
             // arrange
-            var validUser = ContentHelper.GetValidUser();
+            var validUser = TestHelper.GetValidUser();
             Repository.Setup(repo => repo.Get(validUser.Id, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(validUser);
             validUser.Name = $"Changed {validUser.Name}";

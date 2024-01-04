@@ -15,5 +15,13 @@ namespace UserManager.Contracts.Dtos
         public float Longitude { get; set; } = float.NaN;
 
         public bool IsEmpty() => float.IsNaN(Latitude) && float.IsNaN(Longitude);
+
+        public LocationDto() { }
+
+        public LocationDto(float latitude, float longitude)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+        }
     }
 }

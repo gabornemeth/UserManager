@@ -39,7 +39,11 @@ You can build a Docker image with the API, through its Dockerfile. I also have c
 ### Known issues, shortcomings, areas to improve
 - Enhance JSON parsing in order to be able to enforce non nullable properties all the way (`User.Name`, `Address.City`, etc.)
 - Add tests for specific validation errors, not just checking bad requests (if we want to give hints to the client about what was wrong).
+- Internal server error handling (e.g. with displaying a more generic error message, not revealing the stack trace of the Exception)
 - Add more integration tests for the endpoints (having the underlying architecture in place)
+- Add traits for the tests to better categorize them
+- Test whether the right scope checking policy have been applied to the endpoint
+- May add tests for the Swagger documentation Summary classes
 - Add telemetry, logging
 - Enhance database (add constraints, add sequence to be able to use auto-increment numbers as identifier)
 - Separate layer of objects for the database models (that would be the clean architecture on paper, but as we can work with this structure equally well as the main models inside the app, we can skip this step in a pragmatic way)

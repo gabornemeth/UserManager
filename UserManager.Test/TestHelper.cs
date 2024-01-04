@@ -1,9 +1,28 @@
-﻿using UserManager.Models;
+﻿using AutoMapper;
+using UserManager.Contracts.Dtos;
+using UserManager.Mappings;
+using UserManager.Models;
 
 namespace UserManager.Test
 {
-    internal static class ContentHelper
+    internal static class TestHelper
     {
+        public static IMapper CreateMapper()
+        {
+            var config = new MapperConfiguration(config => config.AddProfile<UserProfile>());
+            return config.CreateMapper();
+        }
+
+        public static TUserDto GetValidUserDto<TUserDto>(Action<TUserDto>? applyChanges = null) where TUserDto : UserDtoBase, new()
+        {
+            var mapper = CreateMapper();
+            var user = GetValidUser();
+            var userDto = mapper.Map<TUserDto>(user);
+            applyChanges?.Invoke(userDto);
+
+            return userDto;
+        }
+
         public static User GetValidUser(Action<User>? applyChanges = null)
         {
             var user = new User
