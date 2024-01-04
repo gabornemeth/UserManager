@@ -16,7 +16,7 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration) $(solution)
   displayName: 'Building ASP.NET Web API'
-- script: dotnet test $(solution)
+- script: ./build.sh # default Nuke target is generating the report
   displayName: 'Running tests'
 - task: PublishCodeCoverageResults@2
   inputs:
