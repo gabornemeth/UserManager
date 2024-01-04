@@ -16,7 +16,7 @@ namespace UserManager.Endpoints
 
         public override void Configure()
         {
-            Get("users/{id:int}");
+            Get("users/{id}");
             Policy(p => p.HasScope(Scopes.Read));
         }
 

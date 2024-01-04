@@ -65,7 +65,7 @@ class Build : NukeBuild
             Coverlet(s => s
                 .SetTarget("dotnet")
                 .SetProcessWorkingDirectory(RootDirectory / "UserManager.Test")
-                .SetTargetArgs("test --no-build --no-restore")
+                .SetTargetArgs($"test --no-build --no-restore --configuration {Configuration}")
                 .SetAssembly(testDll)
                 .AddExclude("[*]Program") // entry point
                 .AddExclude("[*]*Summary") // Endpoints documentation
