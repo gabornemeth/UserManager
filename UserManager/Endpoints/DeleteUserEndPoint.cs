@@ -24,11 +24,11 @@ namespace UserManager.Endpoints
             var success = await _userService.Delete(req.Id);
             if (success)
             {
-                await SendOkAsync(ct);
+                await SendNoContentAsync(ct);
             }
             else
             {
-                await SendErrorsAsync(cancellation: ct);
+                await SendNotFoundAsync(cancellation: ct);
             }
         }
     }

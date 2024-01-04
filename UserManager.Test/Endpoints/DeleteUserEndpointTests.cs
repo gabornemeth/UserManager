@@ -14,29 +14,31 @@ namespace UserManager.Test.Endpoints
         public void DoesNotAllowAnonymousAccess() => ShouldAllowAnonymous(false);
 
         [Fact]
-        public async Task DeleteNonExistingUser_Failure()
+        public async Task DeleteNonExistingUser_NotFound()
         {
             // setup
-            UserService.Setup(srv => srv.Delete("8", It.IsAny<CancellationToken>())).ReturnsAsync(false);
+            var userId = "8";
+            UserService.Setup(srv => srv.Delete(userId, It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
             // act
-            await Endpoint.HandleAsync(new Contracts.Requests.DeleteUserRequest { Id = "8" }, CancellationToken.None);
+            await Endpoint.HandleAsync(new Contracts.Requests.DeleteUserRequest { Id = userId }, CancellationToken.None);
 
             // assert
-            Endpoint.HttpContext.Response.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
+            Endpoint.HttpContext.Response.StatusCode.Should().Be(StatusCodes.Status404NotFound);
         }
 
         [Fact]
         public async Task DeleteExistingUser_Success()
         {
             // setup
-            UserService.Setup(srv => srv.Delete("8", It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            var userId = "8";
+            UserService.Setup(srv => srv.Delete(userId, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             // act
-            await Endpoint.HandleAsync(new Contracts.Requests.DeleteUserRequest { Id = "8" }, CancellationToken.None);
+            await Endpoint.HandleAsync(new Contracts.Requests.DeleteUserRequest { Id = userId }, CancellationToken.None);
 
             // assert
-            Endpoint.HttpContext.Response.StatusCode.Should().Be(StatusCodes.Status200OK);
+            Endpoint.HttpContext.Response.StatusCode.Should().Be(StatusCodes.Status204NoContent);
         }
     }
 }
