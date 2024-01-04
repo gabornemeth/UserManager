@@ -16,5 +16,10 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration) $(solution)
   displayName: 'Building ASP.NET Web API'
-- script: dotnet test $(solution)
+- script: |
+          chmod 755 build.sh
+          ./build.sh
   displayName: 'Running tests'
+- task: PublishCodeCoverageResults@2
+  inputs:
+    summaryFileLocation: 'TestCoverage/Results/cobertura.xml'
