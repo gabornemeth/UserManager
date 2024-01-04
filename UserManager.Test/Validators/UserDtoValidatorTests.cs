@@ -5,46 +5,61 @@ using UserManager.Validators;
 
 namespace UserManager.Test.Validators
 {
-    public class CreateUserDtoValidatorTest
+    public class CreateUserDtoValidatorTest : UserDtoValidatorTest<CreateUserRequestValidator, CreateUserRequest>
+    {
+    }
+
+    public class ReplaceUserDtoValidatorTest : UserDtoValidatorTest<ReplaceUserRequestValidator, ReplaceUserRequest>
+    {
+        [Fact]
+        public void NoId_Failure()
+        {
+            var result = ShouldFail(new ReplaceUserRequest { UserName = "john.doe" });
+            result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Id));
+        }
+    }
+
+    public abstract class UserDtoValidatorTest<TUserValidator, TUser> where TUser : UserDtoBase, new()
+        where TUserValidator: UserDtoValidatorBase<TUser>, new()
     {
         [Fact]
         public void NoName_Failure()
         {
-            var result = ShouldFail(new CreateUserRequest { UserName = "john.doe" });
+            var result = ShouldFail(new TUser { UserName = "john.doe" });
             result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Name));
         }
 
         [Fact]
         public void NoUserName_Failure()
         {
-            var result = ShouldFail(new CreateUserRequest { Name = "John Doe" });
+            var result = ShouldFail(new TUser { Name = "John Doe" });
             result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.UserName));
         }
 
         [Fact]
         public void NoEmail_Failure()
         {
-            var result = ShouldFail(new CreateUserRequest { Name = "John Doe", UserName = "john.doe" });
+            var result = ShouldFail(new TUser { Name = "John Doe", UserName = "john.doe" });
             result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Email));
         }
 
-        private ValidationResult ShouldFail(CreateUserRequest user)
+        protected ValidationResult ShouldFail(TUser user)
         {
             var result = Validate(user);
             result.IsValid.Should().BeFalse();
             return result;
         }
 
-        private ValidationResult ShouldSucceed(CreateUserRequest user)
+        private ValidationResult ShouldSucceed(TUser user)
         {
             var result = Validate(user);
             result.IsValid.Should().BeTrue();
             return result;
         }
 
-        private ValidationResult Validate(CreateUserRequest user)
+        private ValidationResult Validate(TUser user)
         {
-            var validator = new CreateUserRequestValidator();
+            var validator = new TUserValidator();
             return validator.Validate(user);
         }
 

@@ -3,12 +3,12 @@ using Newtonsoft.Json;
 
 namespace UserManager.Contracts.Dtos
 {
-    public class UserDto : UserDtoWithoutIdentifier
+    public class UserDto : UserDtoBase
     {
         public string Id { get; set; }
     }
 
-    public class UserDtoWithoutIdentifier
+    public class UserDtoBase
     {
         [JsonProperty("name")]
         public string Name { get; set; }

@@ -3,9 +3,9 @@ using UserManager.Contracts.Requests;
 
 namespace UserManager.Validators
 {
-    public class UpdateUserRequestValidator : UserDtoValidatorBase<ReplaceUserRequest>
+    public class ReplaceUserRequestValidator : UserDtoValidatorBase<ReplaceUserRequest>
     {
-        public UpdateUserRequestValidator()
+        public ReplaceUserRequestValidator()
         {
             RuleFor(user => user.Id).NotEmpty();
         }

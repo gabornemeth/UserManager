@@ -8,7 +8,7 @@ namespace UserManager.Helpers
     {
         public static IEnumerable<UserDto> GetUsers() => GetUsers<UserDto>();
 
-        public static IEnumerable<TUserDto> GetUsers<TUserDto>() where TUserDto : UserDtoWithoutIdentifier
+        public static IEnumerable<TUserDto> GetUsers<TUserDto>() where TUserDto : UserDtoBase
         {
             var sampleData = File.ReadAllText("sample.json");
             var parsedUsers = JsonConvert.DeserializeObject<TUserDto[]>(sampleData) ?? [];
