@@ -15,7 +15,7 @@ No separate set of objects has been created for the database models (that would 
 
 No separate delete permission has been added, because the bad guy/girl with the write scope can still to erase the user data (only can't wipe out the whole entity).
 
-Instead of using the traditional controller based approach, went with the Minimal API. To make endpoint mapping easier, I chose using FastEndPoints library. I had no experience with this previously, wanted to try it out. It worked out pretty well, overall experience is positive. I mainly like that you can separate responsibilities better than you can do by using the MVC approach (one class for one operation), although the underlying layers (`IUserService`, `IUserRepository`) still have that all in one approach as the controllers would.
+Instead of using the traditional controller based approach, went with the Minimal API. To make endpoint mapping easier, I chose using [FastEndPoints](https://fast-endpoints.com/) library. I had no experience with this previously, wanted to try it out. It worked out pretty well, overall experience is positive. I mainly like that you can separate responsibilities better than you can do by using the MVC approach (one class for one operation), although the underlying layers (`IUserService`, `IUserRepository`) still have that all in one approach as the controllers would.
 
 API is documented with Swagger (/swagger url) and also can be tried out there in action.
 
