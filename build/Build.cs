@@ -35,19 +35,7 @@ class Build : NukeBuild
 
     private AbsolutePath CoverageReportDirectory => RootDirectory / "TestCoverage/Report";
 
-    Target Clean => _ => _
-        .Before(Restore)
-        .Executes(() =>
-        {
-        });
-
-    Target Restore => _ => _
-        .Executes(() =>
-        {
-        });
-
     Target Compile => _ => _
-    .DependsOn(Restore)
     .Executes(() =>
     {
         DotNetBuild(s => s
@@ -82,7 +70,6 @@ class Build : NukeBuild
             CoverageReportDirectory.CreateOrCleanDirectory();
             ReportGenerator(s => s
                     .SetTargetDirectory(CoverageReportDirectory)
-                    .SetFramework("net6.0")
                     .SetReportTypes(new ReportTypes[] { ReportTypes.Html })
                     .SetReports(CoverageDirectory / "cobertura.xml"));
         });

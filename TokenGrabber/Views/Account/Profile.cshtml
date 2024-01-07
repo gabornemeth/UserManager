@@ -3,28 +3,22 @@
     ViewData["Title"] = "User Profile";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <h2>@ViewData["Title"].</h2>
-            <div class="col-md-2">
-                <img src="@Model.ProfileImage"
-                     alt="" class="img-rounded img-responsive" />
-            </div>
-            <div class="col-md-4">
-                <h3>@Model.Name</h3>
-                <p>
-                    <i class="glyphicon glyphicon-envelope"></i> @Model.EmailAddress
-                </p>
-            </div>
+<h2>@ViewData["Title"]</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <img src="@Model.ProfileImage" alt="" class="img-rounded img-responsive" />
         </div>
-        <div class="row">
-            <div class="col-md-2">
-                <p>Your token for the API:</p>
-            </div>
-            <div class="col-md-4">
-                @Model.AccessToken
-            </div>
+        <div class="col-sm-9">
+            <h3>@Model.Name</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            Your token for the API access:
+        </div>
+        <div class="col-sm-9">
+            <p class="text-break">@Model.AccessToken</p>
         </div>
     </div>
 </div>

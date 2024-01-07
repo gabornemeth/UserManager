@@ -35,3 +35,9 @@ body {
         display: none;
     }
 }
+
+.token {
+    word-wrap:break-word;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
