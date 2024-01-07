@@ -29,3 +29,5 @@ steps:
     repository: 'nrglabz'
     command: 'buildAndPush'
     Dockerfile: 'UserManager/Dockerfile'
+    tags: usermanager-api
+    buildContext: .
