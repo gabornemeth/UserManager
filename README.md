@@ -41,7 +41,7 @@ For a more advanced scenario I have setup a  [very simple web application](https
 
 You can build a Docker image with the API, through its Dockerfile. I have setup a basic CI/CD pipeline (see the badges at the top), tests run as part of it, both the API and the TokenGrabber webb app are deployed into Azure.
 - [UserManager API](https://usermanager.azurewebsites.net/swagger/)
-- [TokenGrabber web app](https://tokengrabber.azurewebsites.net/) - can get token to test with the user/pass: usermanager@nrglabz.com/T3stUs3r2024
+- [TokenGrabber web app](https://tokengrabber.azurewebsites.net/) - can get token to test with the user/pass: `usermanager-api-test@nrglabz.com/T3stUs3r2024`
 
 [NUKE](https://nuke.build/) build has been setup to make easier the code coverage report generation.
 
