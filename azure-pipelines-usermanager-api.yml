@@ -23,3 +23,9 @@ steps:
 - task: PublishCodeCoverageResults@2
   inputs:
     summaryFileLocation: 'TestCoverage/Results/cobertura.xml'
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker nrglabz registry'
+    repository: 'nrglabz'
+    command: 'buildAndPush'
+    Dockerfile: 'UserManager/Dockerfile'
