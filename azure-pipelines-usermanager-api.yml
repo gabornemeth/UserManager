@@ -25,9 +25,9 @@ steps:
     summaryFileLocation: 'TestCoverage/Results/cobertura.xml'
 - task: Docker@2
   inputs:
-    containerRegistry: 'Docker nrglabz registry'
-    repository: 'usermanager-api'
+    containerRegistry: 'Docker registry - gabornemeth275'
+    repository: 'gabornemeth275/usermanager-api'
     command: 'buildAndPush'
     Dockerfile: 'UserManager/Dockerfile'
-    tags: latest
+    tags: v1
     buildContext: .
