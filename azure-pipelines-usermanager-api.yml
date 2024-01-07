@@ -26,8 +26,8 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'Docker nrglabz registry'
-    repository: 'nrglabz'
+    repository: 'usermanager-api'
     command: 'buildAndPush'
     Dockerfile: 'UserManager/Dockerfile'
-    tags: usermanager-api
+    tags: latest
     buildContext: .
