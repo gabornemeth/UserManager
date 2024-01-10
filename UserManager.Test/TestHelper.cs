@@ -43,7 +43,9 @@ namespace UserManager.Test
                     Name = "Flex LTD",
                     CatchPhrase = "Impossible is where breakthrough begins",
                     BusinessServices = "Electronics contract manufacturer."
-                }
+                },
+                Phone = "123-456-789",
+                Website = "https://www.mycompany.net"
             };
             applyChanges?.Invoke(user);
             return user;

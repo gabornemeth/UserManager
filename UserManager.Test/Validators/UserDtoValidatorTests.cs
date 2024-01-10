@@ -54,12 +54,21 @@ namespace UserManager.Test.Validators
     }
 
     public abstract class UserDtoValidatorTest<TUserValidator, TUser> where TUser : UserDtoBase, new()
-        where TUserValidator: UserDtoValidatorBase<TUser>, new()
+        where TUserValidator : UserDtoValidatorBase<TUser>, new()
     {
         [Fact]
         public void NoName_Failure()
         {
             var result = ShouldFail(new TUser { UserName = "john.doe" });
+            result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Name));
+        }
+
+        [Theory]
+        [InlineData("John $mith")]
+        [InlineData("John Sm!th")]
+        public void InvalidName_Failure(string name)
+        {
+            var result = ShouldFail(TestHelper.GetValidUserDto<TUser>(user => user.Name = name));
             result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Name));
         }
 
@@ -75,6 +84,31 @@ namespace UserManager.Test.Validators
         {
             var result = ShouldFail(new TUser { Name = "John Doe", UserName = "john.doe" });
             result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Email));
+        }
+
+        [Fact]
+        public void InvalidEmail_Failure()
+        {
+            var result = ShouldFail(new TUser { Name = "John Doe", UserName = "john.doe", Email = "notmail.address" });
+            result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Email));
+        }
+
+        [Fact(Skip = "Has to decide about required e-mail validation rules")]
+        public void InvalidEmail2_Failure()
+        {
+            var result = ShouldFail(new TUser { Name = "John Doe", UserName = "john.doe", Email = "not @ mail.address" });
+            result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Email));
+        }
+
+        [Theory]
+        [InlineData("://invalid uri")]
+        [InlineData("invalid")]
+        [InlineData("")]
+        [InlineData("https:///www.mycompany.net")]
+        public void InvalidWebsite_Failure(string website)
+        {
+            var result = ShouldFail(TestHelper.GetValidUserDto<TUser>(user => user.Website = website));
+            result.Errors.Should().Contain(failure => failure.PropertyName == nameof(UserDto.Website));
         }
 
         [Fact]

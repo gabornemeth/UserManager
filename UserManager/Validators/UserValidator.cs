@@ -9,7 +9,7 @@ namespace UserManager.Validators
         {
             RuleFor(user => user.Name).NotNull().NotEmpty();
             RuleFor(user => user.UserName).NotNull().NotEmpty();
-            RuleFor(user => user.Email).NotNull().NotEmpty();
+            RuleFor(user => user.Email).NotNull().NotEmpty().EmailAddress();
             RuleFor(user => user.Company!.Name)
                 .NotNull().NotEmpty()
                 .When(user => user.Company != null);

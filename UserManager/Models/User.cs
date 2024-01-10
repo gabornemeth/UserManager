@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace UserManager.Models
 {
-    public class User
+    public class User : IUser
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

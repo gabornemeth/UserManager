@@ -64,7 +64,6 @@ namespace UserManager.Test
                     new Claim("scope", $"a{Scopes.Read.ToUpper()}1 b{Scopes.Write.ToUpper()}2")
                 };
 
-
                 yield return [false, Scopes.Read, noScopeClaims];
                 yield return [false, Scopes.Write, noScopeClaims];
                 yield return [false, Scopes.Read, scopeClaimWithoutPermissions];

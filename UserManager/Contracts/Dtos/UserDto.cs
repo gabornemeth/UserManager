@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using UserManager.Models;
 
 namespace UserManager.Contracts.Dtos
 {
@@ -8,7 +9,7 @@ namespace UserManager.Contracts.Dtos
         public string Id { get; set; }
     }
 
-    public class UserDtoBase
+    public class UserDtoBase : IUser
     {
         [JsonProperty("name")]
         public string Name { get; set; }
