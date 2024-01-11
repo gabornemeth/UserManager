@@ -18,10 +18,10 @@ steps:
   displayName: 'Building web app'
 - script: dotnet publish $(solution) -o publish
   displayName: 'Publishing web app'
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'Pay-As-You-Go(bfff0a0e-6db8-404d-a93d-690050111dfc)'
-    appType: 'webAppLinux'
-    appName: 'TokenGrabber'
-    package: '$(System.DefaultWorkingDirectory)/publish'
-    startUpCommand: 'dotnet TokenGrabber.dll'
+#- task: AzureWebApp@1
+#  inputs:
+#    azureSubscription: 'Pay-As-You-Go(bfff0a0e-6db8-404d-a93d-690050111dfc)'
+#    appType: 'webAppLinux'
+#    appName: 'TokenGrabber'
+#    package: '$(System.DefaultWorkingDirectory)/publish'
+#    startUpCommand: 'dotnet TokenGrabber.dll'
