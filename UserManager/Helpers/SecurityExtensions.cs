@@ -18,7 +18,12 @@ namespace UserManager
             if (scopeClaim == null)
                 return false;
 
-            return scopeClaim.Value.Contains(scope);
+            var scopes = scopeClaim.Value.Split(' ')
+                .Select(s => s.Trim())
+                .Where(s => !string.IsNullOrEmpty(s))
+                .ToArray();
+
+            return scopes.Contains(scope);
         }
     }
 }

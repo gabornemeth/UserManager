@@ -51,6 +51,18 @@ namespace UserManager.Test
                     new Claim("exp", "1704390755"),
                     new Claim("scope", "")
                 };
+                var trickyScopeClaims = new[] {
+                    new Claim("user", "gabor"),
+                    new Claim("iat", "1704304355"),
+                    new Claim("exp", "1704390755"),
+                    new Claim("scope", $"a{Scopes.Read}1 b{Scopes.Write}2")
+                };
+                var trickyUppercaseScopeClaims = new[] {
+                    new Claim("user", "gabor"),
+                    new Claim("iat", "1704304355"),
+                    new Claim("exp", "1704390755"),
+                    new Claim("scope", $"a{Scopes.Read.ToUpper()}1 b{Scopes.Write.ToUpper()}2")
+                };
 
                 yield return [false, Scopes.Read, noScopeClaims];
                 yield return [false, Scopes.Write, noScopeClaims];
@@ -64,6 +76,10 @@ namespace UserManager.Test
                 yield return [true, Scopes.Write, scopeClaimWithReadAndWritePermissions];
                 yield return [false, Scopes.Read, emptyScopeClaim];
                 yield return [false, Scopes.Write, emptyScopeClaim];
+                yield return [false, Scopes.Read, trickyScopeClaims];
+                yield return [false, Scopes.Write, trickyScopeClaims];
+                yield return [false, Scopes.Read, trickyUppercaseScopeClaims];
+                yield return [false, Scopes.Write, trickyUppercaseScopeClaims];
             }
         }
 

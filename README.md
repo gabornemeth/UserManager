@@ -21,8 +21,16 @@ API is documented with Swagger (/swagger url) and also can be tried out there in
 
 ### Try out, test, develop
 
-You should have Docker Desktop installed. Then you can spin up the MongoDB backend by using [mongo-docker-compose.yaml](https://github.com/gabornemeth/UserManager/blob/main/mongo-docker-compose.yaml). It has a basic setup for development.
+The main solution that you should open with Visual Studio for example is [UserManager.sln](https://github.com/gabornemeth/UserManager/blob/main/UserManager.sln).
+
+You have to have Docker Desktop installed and started (it is needed in order to make the database tests working as well). Then you can spin up the MongoDB backend by using [mongo-docker-compose.yaml](https://github.com/gabornemeth/UserManager/blob/main/mongo-docker-compose.yaml). It has a basic setup for development.
+```
+ docker-compose -f mongo-docker-compose.yaml -p usermanager-api-dev up
+```
+
 Then you have to setup the following secrets - filled in the Mongo connection properties according to the sample [mongo-docker-compose.yaml](https://github.com/gabornemeth/UserManager/blob/main/mongo-docker-compose.yaml).
+
+Authority (issuer) and audience has to match with the ones used for `dotnet user-jwts`
 ```json
   "MongoDB": {
     "ConnectionString": "mongodb://admin:p4ssw0rd@localhost:27017",
@@ -33,7 +41,20 @@ Then you have to setup the following secrets - filled in the Mongo connection pr
     "Audience": ""
   },
 ```
-You can use `dotnet jwts-user` to generate test tokens.
+You can use `dotnet user-jwts` to generate test tokens in the UserManager folder. You can learn about using this tool [here](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/jwt-authn?view=aspnetcore-8.0&tabs=windows).
+You should use something like the following for generating a token allowing you to read and write data.
+```
+dotnet user-jwts create --audience <audience> --issuer <authority> -scope "read:users write:users"
+```
+Don't forget to match the issuer in the `appsettings.json` file as well.
+
+[NUKE](https://nuke.build/) build has been setup to make easier the code coverage report generation. If you have any issue with making NUKE work, please check the link.
+
+Nuke uses [Coverlet](https://github.com/coverlet-coverage/coverlet) and [ReportGenerator](https://github.com/danielpalme/ReportGenerator) under the hood.
+
+Basically you have to build and run the [_build](https://github.com/gabornemeth/UserManager/tree/main/build) project (report generation is configured as the default target) either from the development environment, or from command line. In the command line you have to use `build.ps1` PowerShell script on Windows or `build.sh` on Linux/macOS.
+
+Code coverage report is saved into the `CodeCoverage` folder (you will find both xml and html versions).
 
 ### Moving towards production
 
@@ -42,8 +63,6 @@ For a more advanced scenario I have setup a  [very simple web application](https
 You can build a Docker image with the API, through its Dockerfile. I have setup a basic CI/CD pipeline (see the badges at the top), tests run as part of it, both the API and the TokenGrabber webb app are deployed into Azure.
 - [UserManager API](https://usermanager.azurewebsites.net/swagger/)
 - [TokenGrabber web app](https://tokengrabber.azurewebsites.net/) - It starts very slow if has been stopped due to inactivity. Can get token to test with the user/pass: `usermanager-api-test@nrglabz.com/T3stUs3r2024`
-
-[NUKE](https://nuke.build/) build has been setup to make easier the code coverage report generation.
 
 ### Known issues, shortcomings, areas to improve
 - Enhance JSON parsing in order to be able to enforce non nullable properties all the way (`User.Name`, `Address.City`, etc.)
@@ -57,5 +76,5 @@ You can build a Docker image with the API, through its Dockerfile. I have setup 
 - Add telemetry, logging
 - Enhance database (add constraints, add sequence to be able to use auto-increment numbers as identifier if this is a must)
 - Validation logic could be more centralized and enhanced.
-- Push the build Docker image to Azure Container repository and start it with the configuration supplied in Azure
+- No need to separately build the app in the CI/CD pipeline, executing the NUKE build does this as well.
 - rewrite Git log to remove all traces of accidentally commited sensitive data :)
